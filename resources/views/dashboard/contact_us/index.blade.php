@@ -69,6 +69,8 @@
                     <th>#</th>
                     <th>{{ __("name") }}</th>
                     <th>{{ __("email") }}</th>
+                    <th>{{ __("phone") }}</th>
+
                     <th>{{ __("Message title") }}</th>
                     <th>{{ __("message") }}</th>
                     <th>{{ __("reply") }}</th>
