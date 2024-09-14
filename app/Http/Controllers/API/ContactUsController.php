@@ -14,7 +14,18 @@ class ContactUsController extends Controller
 {
     public function store(storeContactUsRequest $request)
     {
-        $contactUsRequest = ContactUs::create($request->validated());
+      // Format the Saudi phone number
+      $formattedPhone = formatSaudiPhoneNumber($request->phone);
+
+      // Get the validated data from the request
+      $validatedData = $request->validated();
+  
+      // Replace the 'phone' field with the formatted phone number
+      $validatedData['phone'] = $formattedPhone;
+  
+      // Create a new ContactUs record using the modified validated data
+      $contactUsRequest = ContactUs::create($validatedData);
+  
 
        try {
         // Assuming you want to send to multiple recipients in a loop
