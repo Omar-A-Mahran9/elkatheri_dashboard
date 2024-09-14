@@ -27,6 +27,7 @@ class storeContactUsRequest extends FormRequest
             'name' => 'required|string|max:255',
             'email' => 'required|string|max:255|email:rfc,dns',
             'title' => 'required|string|max:255',
+            'phone' => 'required|number',
             'message' => 'required|string|max:255',
         ];
     }
