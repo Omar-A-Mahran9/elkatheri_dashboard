@@ -26,9 +26,8 @@
                 <tr>
                     <td align="center" style="padding:40px 0 30px 0;background:#4EA069;">
                         @if($reply)
-                                <img src="{{ $message->embed(asset('web/img/logo-white.png')) }}" alt="" width="200" style="height:auto;display:block;" />
-                      
-                            @else
+                            <img src="{{  $message->embed(asset('web/img/ease_and_comfort.svg'))  }}" alt="" width="150" style="height:auto;display:block;" />
+                        @else
                             <h1>New inquiry</h1>
                         @endif
                     </td>
