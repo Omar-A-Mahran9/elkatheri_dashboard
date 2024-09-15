@@ -32,6 +32,7 @@ class ContactUsController extends Controller
         $employees = Employee::get(); // Fetch employees or any other recipient data
         
         Mail::send('mails.contact-us', [
+            'message' => $contactUsRequest->message,
             'reply' => $contactUsRequest->reply,
             'contactUs' => $contactUsRequest,
             'web' => true
