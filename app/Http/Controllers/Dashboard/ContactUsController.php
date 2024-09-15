@@ -46,7 +46,7 @@ class ContactUsController extends Controller
 
         try {
 
-            Mail::send('mails.contact-us',[ 'reply' =>  $contactUsRequest->reply, 'web' => false ],function($message) use ($contactUsRequest){
+            Mail::send('mails.contact-us',[ 'reply' =>  $contactUsRequest->reply,'message' =>  $contactUsRequest->message, 'web' => false ],function($message) use ($contactUsRequest){
                 $message->to([$contactUsRequest->email])
                     ->subject('Reply to: ' . $contactUsRequest->title);
             });
