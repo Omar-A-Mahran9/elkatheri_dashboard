@@ -35,10 +35,10 @@
                     <tr>
                         <td align="center" style="padding:40px 0 30px 0;background:#4EA069;">
                             @if ($reply)
-                                <img src="{{ $message->embed(asset('web/img/logo-white.png')) }}" alt="Company Logo"
+                                <img src="{{ $message->embed(asset('web/img/logo-white.png')) }}" alt=""
                                     width="200" style="height:auto;display:block;" />
                             @else
-                                <h1 style="color: #ffffff;">New Inquiry</h1>
+                                <h1>New inquiry</h1>
                             @endif
                         </td>
                     </tr>
@@ -47,24 +47,23 @@
                             <table role="presentation"
                                 style="width:100%;border-collapse:collapse;border:0;border-spacing:0;">
                                 <tr>
-                                    <td align="center" style="color:#153643;padding-bottom:30px;">
+                                    <td align="center" style="padding:40px 0 30px 0;color:#153643;">
                                         @if (!$web)
                                             <p>{{ $message }}</p>
                                             <hr>
-                                            <p
-                                                style="margin:0 0 12px 0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;" class="fw-bold">
-                                              {{ $reply }}
+                                            <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;"
+                                                class="fw-bold">
+                                                {{ $reply }}
                                             </p>
                                         @else
                                             <form action="{{ route('dashboard.contact-us.edit', $contactUs) }}"
-                                                method="GET" style="display:inline-block;">
+                                                method="GET">
                                                 @csrf
-                                                <button type="submit" class="btn btn-primary"
-                                                    id="submit-btn-about-website">Contact Us</button>
+                                                <button type="submit" class="btn btn-primary mx-4"
+                                                    id="submit-btn-about-website">Contact us</button>
                                             </form>
                                         @endif
-                                        <h5 style="margin:10px 0 0 0;font-size:14px;color:#666666;">
-                                            {{ date('Y-m-d h:i a') }}</h5>
+                                        <h5 style="margin:0 0 10px 0">{{ date('Y-m-d h:m a') }}</h5>
                                     </td>
                                 </tr>
                             </table>
@@ -74,7 +73,6 @@
             </td>
         </tr>
     </table>
-
 </body>
 
 </html>
