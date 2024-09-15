@@ -57,16 +57,22 @@
                     <div class="row mb-8">
 
                         <!-- begin :: Column -->
-                        <div class="col-md-6 fv-row">
+                        <div class="col-md-4 fv-row">
                             <label class="fs-5 fw-bold mb-2">{{ __("Name") }}</label>
                             <input type="text" class="form-control"  disabled value="{{ $message['name'] }}"/>
                         </div>
                         <!-- end   :: Column -->
 
                         <!-- begin :: Column -->
-                        <div class="col-md-6 fv-row">
+                        <div class="col-md-4 fv-row">
                             <label class="fs-5 fw-bold mb-2">{{ __("E-mail") }}</label>
                             <input type="text" class="form-control"  disabled value="{{ $message['email'] }}"/>
+                        </div>
+                        <!-- end   :: Column -->
+                         <!-- begin :: Column -->
+                         <div class="col-md-4 fv-row">
+                            <label class="fs-5 fw-bold mb-2">{{ __("phone") }}</label>
+                            <input type="text" class="form-control"  disabled value="{{ $message['phone'] }}"/>
                         </div>
                         <!-- end   :: Column -->
 
