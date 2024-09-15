@@ -72,7 +72,7 @@
                          <!-- begin :: Column -->
                          <div class="col-md-4 fv-row">
                             <label class="fs-5 fw-bold mb-2">{{ __("phone") }}</label>
-                            <input type="text" class="form-control"  disabled value="{{ $message['phone'] }}"/>
+                            <input type="text" class="form-control" disabled value="{{ '0' . substr($message['phone'], 3) }}"/>
                         </div>
                         <!-- end   :: Column -->
 
