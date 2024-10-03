@@ -136,12 +136,20 @@ $this->sendMail($order);
             try {
                 $employees = Employee::get(); // Fetch employees outside the Mail::send call
         
-                Mail::send('mails.mail', ['order' => $order], function ($message) use ($employees) {
-                    // foreach ($employees as $emp) {
-                    //     $message->to($emp->email)->subject(__('New Car Order'));
-                    // }
-                    $message->to("mail@alkathirimotors.com.sa")->subject(__('New Car Order'));
-                    $message->to("info@alkathirimotors.com.sa")->subject(__('New Car Order'));
+                // Mail::send('mails.mail', ['order' => $order], function ($message) use ($employees) {
+                //     // foreach ($employees as $emp) {
+                //     //     $message->to($emp->email)->subject(__('New Car Order'));
+                //     // }
+                //     $message->to($order->organization_email)->subject(__('New Car Order'));
+   
+                // });
+                
+                   Mail::send('mails.mailadmin', ['order' => $order], function ($message) use ($employees) {
+                    foreach ($employees as $emp) {
+                        $message->to($emp->email)->subject(__('New Car Order'));
+                    }
+                    $message->to(settings()->get('email'))->subject(__('New Car Order')) ;
+                    
                 });
         
             } catch (\Throwable $th) {

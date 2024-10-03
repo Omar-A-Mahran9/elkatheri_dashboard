@@ -99,8 +99,9 @@ class AppointmentController extends Controller
             });
                   Mail::send('mails.maintenance',[ 'appointment' =>  $appointment ],function($message) use($appointment){
                 $message->to(settings()->get('email'))->subject(__('New maintenance appointment'));
-            });
+            }) ;
        
+
             // Send SMS reminder
              $smsResult = SendMaintenanceReminder(
             $formattedPhone,
