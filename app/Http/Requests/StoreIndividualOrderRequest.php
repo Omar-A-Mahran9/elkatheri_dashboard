@@ -46,6 +46,8 @@ class StoreIndividualOrderRequest extends FormRequest
             'salary_identification' => 'nullable|image|max:4096',
             'insurance_print' => 'nullable|image|max:4096',
             'account_statement' => 'nullable|image|max:4096',
+            'terms_and_privacy' => 'accepted',
+
         ];
 
 

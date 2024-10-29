@@ -39,9 +39,8 @@ class ContactUsController extends Controller
             // foreach ($employees as $emp) {
             //     $message->to($emp->email)->subject(__('Contact Us Reply'));
             // }
-             $message->to("mail@alkathirimotors.com.sa")->subject(__('New Car Order'));
-             $message->to("info@alkathirimotors.com.sa")->subject(__('New Car Order'));
-        });
+             $message->to(settings()->get('email'))->subject(__('New Contact Request'));
+         }); 
 
     } catch (\Throwable $th) {
             dd($th->getMessage()) ;

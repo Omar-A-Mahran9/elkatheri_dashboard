@@ -35,6 +35,8 @@ class StoreCorporatesOrderRequest extends FormRequest
             'organization_location' => 'required|max:255',
             'organization_activity' => 'required|max:255',
             'organization_age' => 'required|min:1',
+            'terms_and_privacy' => 'accepted',
+
         ];
     }
 }

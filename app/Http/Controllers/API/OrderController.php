@@ -52,7 +52,7 @@ class OrderController extends Controller
         $order = Order::create($data);
         $order->services()->attach($request['services'] ?? []);
 
- $this->sendMail($order);  
+        $this->sendMail($order);  
         return response()->json(["individual order created successfully"]);
     }
 
@@ -100,7 +100,6 @@ $this->sendMail($order);
         $data['type'] = 'unavailable_car';
         $data['phone'] = convertArabicNumbers($data['phone']);
         $order = Order::create($data);
-
         $this->newUnavailableCarNotification($order);
         return response()->json(["order created successfully"]);
     }

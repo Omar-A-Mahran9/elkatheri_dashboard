@@ -29,6 +29,8 @@ class storeUnavailableCarRequest extends FormRequest
             'phone' => "required|numeric",
             'car_name' => "required|string",
             'city_name' => "required|string",
+            'terms_and_privacy' => 'accepted',
+
         ];
     }
 }
