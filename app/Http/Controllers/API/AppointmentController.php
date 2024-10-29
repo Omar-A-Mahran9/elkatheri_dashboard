@@ -122,11 +122,6 @@ class AppointmentController extends Controller
             ], 500);
         }
 
-     
-        } catch (\Throwable $th) {
-            return ($th->getMessage()) ;
-        }
-
         if($appointment == null)
         {
             throw ValidationException::withMessages([
@@ -136,6 +131,12 @@ class AppointmentController extends Controller
         }
 
         return response()->json(new AppointmentResource($appointment));
+        
+        } catch (\Throwable $th) {
+            return ($th->getMessage()) ;
+        }
+
+      
     }
     
  
