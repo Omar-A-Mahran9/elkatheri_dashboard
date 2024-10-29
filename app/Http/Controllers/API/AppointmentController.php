@@ -124,15 +124,21 @@ class AppointmentController extends Controller
 
         }
 
-        return response()->json(new AppointmentResource($appointment));
+        $errorDetails = null;
 
         if (!$smsResult['success']) {
-            return response()->json([
+            $errorDetails = [
                 'error' => 'Failed to send SMS reminder',
                 'details' => $smsResult['error'],
                 'params' => $smsResult['params']
-            ], 500);
+            ];
         }
+
+        return response()->json([
+            'data' => new AppointmentResource($appointment),
+            'errors' => $errorDetails
+        ]);
+            
         
         } catch (\Throwable $th) {
             return ($th->getMessage()) ;
