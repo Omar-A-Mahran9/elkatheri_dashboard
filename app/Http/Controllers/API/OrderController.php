@@ -102,6 +102,8 @@ $this->sendMail($order);
         $order = Order::create($data);
 
         $this->newUnavailableCarNotification($order);
+        $this->sendMail($order); 
+
         return response()->json(["order created successfully"]);
     }
 
@@ -145,9 +147,9 @@ $this->sendMail($order);
                 // });
                 
                    Mail::send('mails.mailadmin', ['order' => $order], function ($message) use ($employees) {
-                    foreach ($employees as $emp) {
-                        $message->to($emp->email)->subject(__('New Car Order'));
-                    }
+                    // foreach ($employees as $emp) {
+                    //     $message->to($emp->email)->subject(__('New Car Order'));
+                    // }
                     $message->to(settings()->get('email'))->subject(__('New Car Order')) ;
                     
                 });
