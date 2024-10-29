@@ -134,8 +134,9 @@ if (!$smsResult['success']) {
     ];
 }
 
-        return response()->json(new AppointmentResource($appointment), $errorDetails);
-
+return response()
+    ->json(new AppointmentResource($appointment))
+    ->header('X-SMS-Error-Details', $errorDetails);
         
 
        
