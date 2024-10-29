@@ -29,6 +29,8 @@ class storeContactUsRequest extends FormRequest
             'title' => 'required|string|max:255',
             'phone' => ['bail', 'required', 'regex:/(^(009665|9665|\+9665|05|5)(5|0|3|6|4|9|1|8|7)([0-9]{7})$)/u'],
             'message' => 'required|string|max:255',
+            'terms_and_privacy' => 'accepted',
+
         ];
     }
 }

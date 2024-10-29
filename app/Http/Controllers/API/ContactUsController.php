@@ -43,6 +43,7 @@ class ContactUsController extends Controller
       
         });
 
+
     } catch (\Throwable $th) {
             dd($th->getMessage()) ;
         }  

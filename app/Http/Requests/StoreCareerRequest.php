@@ -30,6 +30,8 @@ class StoreCareerRequest extends FormRequest
             'cv' => 'required|file|max:4096',
             'city_id' => 'required|exists:cities,id',
             'comment' => 'nullable|string|max:255',
+            'terms_and_privacy' => 'accepted',
+
         ];
     }
 }
