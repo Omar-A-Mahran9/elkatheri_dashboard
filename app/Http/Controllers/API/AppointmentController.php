@@ -114,13 +114,6 @@ class AppointmentController extends Controller
             $appointment->branch->name
         );
 
-        if (!$smsResult['success']) {
-            return response()->json([
-                'error' => 'Failed to send SMS reminder',
-                'details' => $smsResult['error'],
-                'params' => $smsResult['params']
-            ], 500);
-        }
 
         if($appointment == null)
         {
@@ -133,6 +126,13 @@ class AppointmentController extends Controller
         return response()->json(new AppointmentResource($appointment));
         
         } catch (\Throwable $th) {
+            if (!$smsResult['success']) {
+                return response()->json([
+                    'error' => 'Failed to send SMS reminder',
+                    'details' => $smsResult['error'],
+                    'params' => $smsResult['params']
+                ], 500);
+            }
             return ($th->getMessage()) ;
         }
 
