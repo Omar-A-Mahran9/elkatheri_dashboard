@@ -400,7 +400,7 @@ if (!function_exists('SendMaintenanceReminder')) {
     function SendMaintenanceReminder($phone, $appointmentNumber, $appointmentDate, $appointmentTime, $center)
     {
         $apiUrl = "https://api.oursms.com/api-a/msgs";
-        $token = "dVRuCnZdpacI8MG2OPwJ";
+        $token = "Cc7k0i05LZtyYdCDlw42";
         $src = 'HMalkathiri';
 
         $body = <<<msg
