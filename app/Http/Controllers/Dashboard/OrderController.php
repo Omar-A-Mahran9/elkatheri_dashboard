@@ -87,10 +87,14 @@ class OrderController extends Controller
                 __('Commitments') => $order->commitments,
                 __('Work') => $order->work,
                 __('bank') => $order->bank?__($order->bank->name) : '-',
-                __('city') => $order->city? __($order->city->name) : '-',
+                __('city') => $order->city 
+                ? __($order->city->name) 
+                : ($order->city_name ? __($order->city_name) : '-'),
                 __('Payment Type') => __($order->payment_type),
-                __('car') => $order->car? __($order->car->name) : '-',
-                __('price') => $order->price,
+                __('car') => $order->car 
+                ? __($order->car->name) 
+                : ($order->car_name ? __($order->car_name) : '-'),
+               __('price') => $order->price,
                 __('type') => __($order->type),
                 __('status') => $order->status ? __($order->status->name) : '-',
                 __('date') => $order->created_at->format('Y-m-d'),
