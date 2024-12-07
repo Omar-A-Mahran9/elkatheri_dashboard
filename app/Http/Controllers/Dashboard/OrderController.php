@@ -74,33 +74,58 @@ class OrderController extends Controller
         $order->update(['status_id' => $request['status_id'] ]);
     }
 
-    public function excel()
+    public function excel(Request $request)
     {
-        // Load users
-        $orders = Order::with('employee', 'status', 'employee','city','bank','car')->select('id', 'salary','name', 'phone','created_at' ,'price', 'type', 'opened_by', 'created_at', 'opened_at', 'status_id','salary_identification','commitments','work','bank_id','car_id','city_id','payment_type','city_name','car_name')->orderBy('created_at', 'DESC')->get();
+        $ordersQuery = Order::with('employee', 'status', 'employee','city','bank','car')
+                            ->select('id', 'salary', 'name', 'phone', 'created_at', 'price', 'type', 'opened_by', 'created_at', 'opened_at', 'status_id', 'salary_identification', 'commitments', 'work', 'bank_id', 'car_id', 'city_id', 'payment_type', 'city_name', 'car_name')
+                            ->orderBy('created_at', 'DESC');
+    
+        // Apply status filter if provided
+        if ($request->has('status')   && $request->status!=null && $request->status != 'all') {
+            $ordersQuery->where('status_id', $request->status);
+        }
+        // Apply date range filter if provided
+        if ($request->has('date_range')  &&$request->date_range !=null && $request->date_range) {
+
+            $dateRange = explode(' - ', $request->date_range);
+            if (count($dateRange) == 2) {
+                $startDate = Carbon::parse($dateRange[0])->startOfDay(); // Set time to 00:00:00 on the first day
+                $endDate = Carbon::parse($dateRange[1])->endOfDay();   // Set time to 23:59:59 on the last day
+
+                if($dateRange[0]===$dateRange[1]){
+                    $ordersQuery->where('created_at',  $startDate);
+
+                }
+                $ordersQuery->whereBetween('created_at', [ $startDate,$endDate]);
+            }
+
+        }
  
+        // Fetch orders
+        $orders = $ordersQuery->get();
+      // Check if there are any orders
+if ($orders->isEmpty()) {
+    // Optionally, you can return a message or handle the case when there are no orders
+    return redirect()->back();
+}
         return (new FastExcel($orders->map(function($order){
-             return [
+            return [
                 __('name') => $order->name ?? '-',
                 __('phone') => $order->phone,
                 __('Salary') => $order->salary,
                 __('Commitments') => $order->commitments,
                 __('Work') => $order->work,
-                __('bank') => $order->bank?__($order->bank->name) : '-',
-                __('city') => $order->city 
-                ? __($order->city->name) 
-                : ($order->city_name ? __($order->city_name) : '-'),
+                __('bank') => $order->bank ? __($order->bank->name) : '-',
+                __('city') => $order->city ? __($order->city->name) : ($order->city_name ? __($order->city_name) : '-'),
                 __('Payment Type') => __($order->payment_type),
-                __('car') => $order->car 
-                ? __($order->car->name) 
-                : ($order->car_name ? __($order->car_name) : '-'),
-               __('price') => $order->price,
+                __('car') => $order->car ? __($order->car->name) : ($order->car_name ? __($order->car_name) : '-'),
+                __('price') => $order->price,
                 __('type') => __($order->type),
                 __('status') => $order->status ? __($order->status->name) : '-',
                 __('date') => $order->created_at->format('Y-m-d'),
-
-    
             ];
         })))->download('orders.xlsx');
     }
+    
+    
 }
