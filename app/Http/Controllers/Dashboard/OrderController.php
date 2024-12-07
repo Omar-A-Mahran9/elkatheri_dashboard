@@ -77,7 +77,7 @@ class OrderController extends Controller
     public function excel()
     {
         // Load users
-        $orders = Order::with('employee', 'status', 'employee','city','bank','car')->select('id', 'salary','name', 'phone','created_at' ,'price', 'type', 'opened_by', 'created_at', 'opened_at', 'status_id','salary_identification','commitments','work','bank_id','car_id','city_id','payment_type')->orderBy('created_at', 'DESC')->get();
+        $orders = Order::with('employee', 'status', 'employee','city','bank','car')->select('id', 'salary','name', 'phone','created_at' ,'price', 'type', 'opened_by', 'created_at', 'opened_at', 'status_id','salary_identification','commitments','work','bank_id','car_id','city_id','payment_type','city_name','car_name')->orderBy('created_at', 'DESC')->get();
  
         return (new FastExcel($orders->map(function($order){
              return [
@@ -87,7 +87,9 @@ class OrderController extends Controller
                 __('Commitments') => $order->commitments,
                 __('Work') => $order->work,
                 __('bank') => $order->bank?__($order->bank->name) : '-',
-                __('city') => $order->city_name,
+                __('city') => $order->city 
+                ? __($order->city->name) 
+                : ($order->city_name ? __($order->city_name) : '-'),
                 __('Payment Type') => __($order->payment_type),
                 __('car') => $order->car 
                 ? __($order->car->name) 
