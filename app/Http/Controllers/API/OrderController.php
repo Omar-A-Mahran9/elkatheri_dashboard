@@ -33,7 +33,6 @@ class OrderController extends Controller
         $data['type'] = 'individual';
         $car = Car::find($data['car_id']);
         $data['price'] = $car->selling_price_after_vat;
-
         if($request->funding_organization_type == 'same_bank')
             $data['funding_bank_id'] = $data['bank_id'];
 
@@ -48,6 +47,7 @@ class OrderController extends Controller
 
         if ($request->file('account_statement'))
             $data['account_statement'] = uploadImage( $request->file('account_statement') , "Orders");
+ $data['terms_and_privacy'] = $data['terms_and_privacy'] ? 1 : 0;
 
         $order = Order::create($data);
         $order->services()->attach($request['services'] ?? []);
@@ -75,6 +75,7 @@ class OrderController extends Controller
 
         if ($request->file('account_statement'))
             $data['account_statement'] = uploadImage( $request->file('account_statement') , "Orders");
+ $data['terms_and_privacy'] = $data['terms_and_privacy'] ? 1 : 0;
 
         $order = Order::create($data);
         $order->services()->attach($request['services'] ?? []);
@@ -99,6 +100,8 @@ $this->sendMail($order);
         $data = $request->validated();
         $data['type'] = 'unavailable_car';
         $data['phone'] = convertArabicNumbers($data['phone']);
+         $data['terms_and_privacy'] = $data['terms_and_privacy'] ? 1 : 0;
+
         $order = Order::create($data);
         $this->newUnavailableCarNotification($order);
         $this->sendMail($order); 

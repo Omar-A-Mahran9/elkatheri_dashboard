@@ -25,5 +25,10 @@ class HomeController extends Controller
         return response()->json(['cars' => $tag->cars ]);
     }
 
+    public function slide($name = null)
+    {
+       return view('home.slide', ['name' => $name]);
+    }
+
 
 }

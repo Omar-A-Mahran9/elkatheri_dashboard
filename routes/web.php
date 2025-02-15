@@ -52,3 +52,6 @@ Route::get('/slider', function(){
         'slider' => file_get_contents("https://slider.rotanacarshowroom.com/RevSliderEmbedderputRevSlider.php?slide=rotana_en")
     ];
 });
+
+
+Route::get('/slide/{name}', 'Home\HomeController@slide')->name('slide.web');
