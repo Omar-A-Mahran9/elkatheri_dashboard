@@ -3,6 +3,9 @@
 use App\Http\Controllers\API\CampaignController;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/', [CampaignController::class, 'trackVisit'])->middleware('track.campaign');
+
+
 Route::get('/language/{lang}', function ($lang) {
 
     session()->put('locale', $lang);

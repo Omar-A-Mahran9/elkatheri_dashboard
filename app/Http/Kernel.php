@@ -21,6 +21,8 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \App\Http\Middleware\Cors::class,
+        \App\Http\Middleware\TrackCampaignVisit::class,
+
     ];
 
     /**
@@ -69,6 +71,8 @@ class Kernel extends HttpKernel
         'maintenance_mode' => \App\Http\Middleware\MaintenanceMode::class,
         'cors' => \App\Http\Middleware\Cors::class,
         'json.response' => \App\Http\Middleware\ForceJsonResponse::class,
+        'track.campaign' => \App\Http\Middleware\TrackCampaignVisit::class,
+
 
     ];
 }

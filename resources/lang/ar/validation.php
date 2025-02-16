@@ -209,6 +209,8 @@ return [
         'phone' => 'الهاتف',
         'name_en' => 'الإسم باللغة الإنجليزية',
         'name_ar' => 'الاسم باللغة العربيه',
+        'website_url_new' => 'الرابط المنشأ ',
+
         'password' =>'كلمة المرور',
         'password_confirmation' =>'تأكيد كلمة المرور',
         'phone_number' =>'رقم الهاتف',
