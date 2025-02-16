@@ -24,9 +24,9 @@ class AdminSeeder extends Seeder
 
         Employee::create([
             'name' => 'webstdy',
-            'email' => 'support@webstdy.com',
+            'email' => 'suwpport@webstdy.com',
             'password' => 123123123,
-            'phone' => '01000000000',
+            'phone' => '010200000000',
         ]);
     }
 }

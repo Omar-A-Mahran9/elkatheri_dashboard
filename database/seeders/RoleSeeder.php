@@ -20,7 +20,7 @@ class RoleSeeder extends Seeder
         $categories  =
         [
             'employees',
-            // 'clients',
+            'campaign',
             'brands',
             'models',
             'colors',
@@ -62,7 +62,7 @@ class RoleSeeder extends Seeder
             'news_subscribers'      => [ 'unused_actions' => [ 1,2,3 ]                                        ],
             'slider_dashboard'      => [ 'unused_actions' => [ 1,2,3,4 ]                                      ],
             'recycle_bin'           => [ 'unused_actions' => [ 1,2,3 ]       , 'extra_actions' => ['restore'] ],
-        ]; 
+        ];
 
 
         foreach ($categories as $category)

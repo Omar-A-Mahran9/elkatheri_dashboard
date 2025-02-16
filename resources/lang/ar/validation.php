@@ -230,6 +230,10 @@ return [
         'video_url' => 'رابط الفيديو',
         'cars.*.price' => 'السعر',
         'price' => 'السعر',
+        'campaign_source' => 'مصدر الحملة',
+        'campaign_name' => 'اسم الحملة',
+        'campaign_medium' => 'وسيط الحملة',
+
         'cars.*.discount_price' => 'السعر بعد التخفيض',
         'discount_price' => 'السعر بعد التخفيض',
         'cars.*.price_field_status' => 'حقل السعر في الموقع',
