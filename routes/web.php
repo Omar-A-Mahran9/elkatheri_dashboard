@@ -4,6 +4,7 @@ use App\Http\Controllers\API\CampaignController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [CampaignController::class, 'trackVisit'])->middleware('track.campaign');
+Route::get('/short/{code}', [CampaignController::class, 'checkCampaign']);
 
 
 Route::get('/language/{lang}', function ($lang) {
@@ -47,7 +48,6 @@ Route::get('update-db', function () {
 
     dd('done');
 });
-Route::get('/short/{code}', [CampaignController::class, 'checkCampaign']);
 
 Route::get('/slider', function(){
     return view('home.slider');
