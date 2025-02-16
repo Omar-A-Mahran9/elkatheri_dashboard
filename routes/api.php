@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\CampaignController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -42,6 +43,7 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
     Route::get('make-appointment-form-data', 'AppointmentController@formData');
     Route::post('make-appointment', 'AppointmentController@store');
     Route::get('banks', 'BankController');
+
     Route::get('/slider', function(){
         // dd(view('home.slider')->render() . file_get_contents( public_path('js/home/jQuery.js')));
         return [

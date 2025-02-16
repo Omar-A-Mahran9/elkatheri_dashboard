@@ -24,6 +24,8 @@ class CreateCampaignsTable extends Migration
             $table->string('campaign_name',255);
             $table->longText('website_url_new');
             $table->longText('shorten_link')->nullable();
+            $table->string('shorten_code',255)->nullable() ;
+
              $table->string('device_ip')->nullable();
             $table->string('visited_at')->nullable();
             $table->integer('visits')->default(0); // عدد الزيارات
