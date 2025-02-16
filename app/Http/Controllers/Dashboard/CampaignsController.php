@@ -26,8 +26,7 @@ class CampaignsController extends Controller
     public function create()
     {
         $this->authorize('create_campaign');
-dd(env('APP_URL'));
-        return view('dashboard.campaigns.create');
+         return view('dashboard.campaigns.create');
     }
 
 

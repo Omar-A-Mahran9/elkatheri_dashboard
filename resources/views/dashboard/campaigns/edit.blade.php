@@ -41,8 +41,8 @@
                             <label class="fs-5 fw-bold mb-2">{{ __('Website URL') }}</label>
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="website_url_inp" name="website_url"
-                                    value="{{ $campaign->website_url ?? env('APP_URL') }}" placeholder="https://example.com"
-                                    readonly />
+                                    value="{{ $campaign->website_url ?? (env('APP_URL') ?? 'https://alkathirimotors.com.sa') }}"
+                                    placeholder="https://example.com" readonly />
                                 <label for="website_url_inp">{{ __('Enter the Website URL') }}</label>
                             </div>
                         </div>
@@ -109,7 +109,7 @@
                 </div>
             </div>
 
-            <input type="hidden" id="app-url" value="{{ env('APP_URL') }}">
+            <input type="hidden" id="app-url" value="{{ env('APP_URL') ?? 'https://alkathirimotors.com.sa' }}">
 
             <div class="inputs-wrapper">
                 <!-- Shorten Link -->
@@ -176,7 +176,8 @@
         });
 
         document.getElementById("generate-shorten-btn").addEventListener("click", function() {
-            let shortenedUrl = "{{ env('APP_URL') }}/short/" + Math.random().toString(36).substr(2, 8);
+            let shortenedUrl = "{{ env('APP_URL') ?? 'https://alkathirimotors.com.sa' }}/short/" + Math.random()
+                .toString(36).substr(2, 8);
             document.getElementById("shorten-url").value = shortenedUrl;
         });
     </script>

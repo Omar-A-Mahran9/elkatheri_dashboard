@@ -59,7 +59,8 @@
                             <label class="fs-5 fw-bold mb-2">{{ __('Website URL') }}</label>
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="website_url_inp" name="website_url"
-                                    value="{{ env('APP_URL') }}" placeholder="https://example.com" readonly />
+                                    value="{{ env('APP_URL') ?? 'https://alkathirimotors.com.sa' }}"
+                                    placeholder="https://example.com" readonly />
                                 <label for="website_url_inp">{{ __('Enter the Website URL') }}</label>
                             </div>
                             <p class="invalid-feedback" id="website_url"></p>
@@ -140,7 +141,7 @@
                 </div>
             </div>
 
-            <input type="hidden" id="app-url" value="{{ env('APP_URL') }}">
+            <input type="hidden" id="app-url" value="{{ env('APP_URL') ?? 'https://alkathirimotors.com.sa' }}">
 
             <div class="inputs-wrapper">
                 <!-- Shorten Link -->
