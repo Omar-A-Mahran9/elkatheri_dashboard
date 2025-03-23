@@ -79,4 +79,17 @@ class CarController extends Controller
             'cars' => SingleCarResource::collection($modelCars)
         ];
     }
+
+    public function show($id)
+    {
+        $car = Car::find($id);
+
+        if (!$car) {
+            return response()->json(['message' => 'Car not found'], 404);
+        }
+
+        return new CarResource($car);
+    }
+
+
 }

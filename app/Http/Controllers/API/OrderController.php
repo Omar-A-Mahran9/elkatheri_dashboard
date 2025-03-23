@@ -52,7 +52,7 @@ class OrderController extends Controller
         $order = Order::create($data);
         $order->services()->attach($request['services'] ?? []);
 
-        $this->sendMail($order);  
+        $this->sendMail($order);
         return response()->json(["individual order created successfully"]);
     }
 
@@ -80,7 +80,7 @@ class OrderController extends Controller
         $order = Order::create($data);
         $order->services()->attach($request['services'] ?? []);
 
-$this->sendMail($order); 
+$this->sendMail($order);
         return response()->json(["corporate order created successfully"]);
     }
 
@@ -104,7 +104,7 @@ $this->sendMail($order);
 
         $order = Order::create($data);
         $this->newUnavailableCarNotification($order);
-        $this->sendMail($order); 
+        $this->sendMail($order);
 
         return response()->json(["order created successfully"]);
     }
@@ -139,23 +139,23 @@ $this->sendMail($order);
         {
             try {
                 $employees = Employee::get(); // Fetch employees outside the Mail::send call
-        
+
                 // Mail::send('mails.mail', ['order' => $order], function ($message) use ($employees) {
                 //     // foreach ($employees as $emp) {
                 //     //     $message->to($emp->email)->subject(__('New Car Order'));
                 //     // }
                 //     $message->to($order->organization_email)->subject(__('New Car Order'));
-   
+
                 // });
-                
+
                    Mail::send('mails.mailadmin', ['order' => $order], function ($message) use ($employees) {
                     // foreach ($employees as $emp) {
                     //     $message->to($emp->email)->subject(__('New Car Order'));
                     // }
                     $message->to(settings()->get('email'))->subject(__('New Car Order')) ;
-                    
+
                 });
-        
+
             } catch (\Throwable $th) {
                 dd($th->getMessage());
             }

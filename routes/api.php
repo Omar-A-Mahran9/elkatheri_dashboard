@@ -19,6 +19,9 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
     Route::get('brands', 'BrandController@allBrands');
     Route::get('cars/latest', 'CarController@latest');
     Route::get('cars', 'CarController@all');
+
+    Route::get('car-details/{id}', 'CarController@show');
+
     Route::get('cars-basedOn-model', 'CarController@carsBasedOnModel');
     Route::get('models/{carModel}', 'CarController@modelCars');
     Route::get('news', 'NewController@all');

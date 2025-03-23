@@ -31,7 +31,7 @@ class StoreIndividualOrderRequest extends FormRequest
             'phone' => "required|numeric",
             'age' => "required_if:payment_type,finance|nullable|numeric",
             'salary' => "required_if:payment_type,finance|nullable|numeric|min:3000",
-            'commitments' => "required_if:payment_type,finance|nullable|min:1",
+            'commitments' => "required_if:payment_type,finance|nullable|numeric|min:0.01",
             'having_loan' => "required_if:payment_type,finance|nullable|in:1,0",
             'having_personal_loan' => "required_if:payment_type,finance|nullable|in:1,0",
             'finance_duration' => "required_if:payment_type,finance|nullable",

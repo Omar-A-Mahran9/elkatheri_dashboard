@@ -12,7 +12,6 @@ class CampaignController extends Controller
 {
     public function checkCampaign($code, Request $request)
     {
-        dd('oamam');
         // Find campaign by code
         $campaign = Campaign::where('shorten_code', $code)->first();
 
