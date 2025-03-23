@@ -20,7 +20,7 @@ class CarResource extends JsonResource
             'name' => $this->name,
             'main_image' => $this->main_image_path,
             // 'images' => $this->images,
-            'images' => $this->images->pluck('image')->map(fn($image) => $image),
+            'images' => $this->images->pluck('images')->map(fn($image) => $image),
 
             'selling_price' => $this->selling_price,
             'selling_price_after_vat' => $this->selling_price_after_vat,
