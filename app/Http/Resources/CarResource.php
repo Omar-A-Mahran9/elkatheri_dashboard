@@ -19,8 +19,9 @@ class CarResource extends JsonResource
             'model_id' => $this->model_id,
             'name' => $this->name,
             'main_image' => $this->main_image_path,
-            // 'images' => $this->images,
-            'images' => $this->images,
+            // 'images' => $this->getImagesAttribute(),
+            'images' => $this->getImagesAttribute()->map(fn($image) => asset(getImagePathFromDirectory($image, 'CarModelImages'))),
+
 
             'selling_price' => $this->selling_price,
             'selling_price_after_vat' => $this->selling_price_after_vat,
