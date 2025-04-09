@@ -22,7 +22,7 @@ use App\Http\Requests\StoreIndividualOrderRequest;
 use App\Http\Requests\storeofferorderRequest;
 use App\Http\Resources\FundingOrganizationResource;
 use App\Models\Employee;
-
+use App\Models\Offer;
 
 class OrderController extends Controller
 {
