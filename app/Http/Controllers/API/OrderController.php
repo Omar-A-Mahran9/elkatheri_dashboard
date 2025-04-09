@@ -110,7 +110,7 @@ $this->sendMail($order);
         return response()->json(["order created successfully"]);
     }
 
-    public function OfferOrder(storeofferorderRequest $request)
+    public function OfferOrder(storeofferorderRequest $request, $offer)
     {
         $data = $request->validated();
 
@@ -132,6 +132,7 @@ $this->sendMail($order);
 
         // Prepare order data
         $data['type'] = 'offer_order';
+        $data['offer_id'] = $offer;
         $data['phone'] = convertArabicNumbers($data['phone']);
         $data['terms_and_privacy'] = $data['terms_and_privacy'] ? 1 : 0;
 
