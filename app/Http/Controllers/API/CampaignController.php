@@ -12,7 +12,6 @@ class CampaignController extends Controller
 {
     public function checkCampaign($code, Request $request)
     {
-        dd('fdfdfd');
         // Find campaign by code
         $campaign = Campaign::where('shorten_code', $code)->first();
 
@@ -63,7 +62,7 @@ class CampaignController extends Controller
 
         // Find the campaign matching the URL
         $campaign = Campaign::where('website_url_new', $fullUrl)->first();
-
+ 
         if (!$campaign) {
             return response()->json(['message' => 'Campaign not found'], 404);
         }

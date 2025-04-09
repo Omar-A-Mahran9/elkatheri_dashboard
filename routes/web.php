@@ -2,8 +2,9 @@
 
 use App\Http\Controllers\API\CampaignController;
 use Illuminate\Support\Facades\Route;
+Route::get('/' , 'DashboardController@index')->name('index');
 
-Route::get('/', [CampaignController::class, 'trackVisit'])->middleware('track.campaign');
+// Route::get('/', [CampaignController::class, 'trackVisit'])->middleware('track.campaign');
 Route::get('/short/{code}', [CampaignController::class, 'checkCampaign']);
 
 
