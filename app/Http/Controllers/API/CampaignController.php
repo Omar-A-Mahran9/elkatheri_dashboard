@@ -63,7 +63,6 @@ class CampaignController extends Controller
 
         // Find the campaign matching the URL
         $campaign = Campaign::where('website_url_new', $fullUrl)->first();
-        dd('fdfdfd');
 
         if (!$campaign) {
             return response()->json(['message' => 'Campaign not found'], 404);
