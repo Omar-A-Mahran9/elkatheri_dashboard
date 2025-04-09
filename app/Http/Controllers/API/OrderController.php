@@ -114,6 +114,14 @@ $this->sendMail($order);
     {
         $data = $request->validated();
 
+        // Check if the offer_id exists in the offers table
+        if (!Offer::find($offer)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Offer not found'
+            ], 404);
+        }
+
         // Check if city_id exists
         if (!City::find($data['city_id'])) {
             return response()->json([
@@ -130,9 +138,11 @@ $this->sendMail($order);
             ], 404);
         }
 
-        // Prepare order data
-        $data['type'] = 'offer_order';
+        // Add the offer_id from the route to the order data
         $data['offer_id'] = $offer;
+
+        // Prepare the rest of the order data
+        $data['type'] = 'offer_order';
         $data['phone'] = convertArabicNumbers($data['phone']);
         $data['terms_and_privacy'] = $data['terms_and_privacy'] ? 1 : 0;
 
