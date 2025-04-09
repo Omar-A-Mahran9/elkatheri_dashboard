@@ -27,6 +27,11 @@ class CarController extends Controller
 
         return CarResource::collection($cars->get());
     }
+    public function all_cars()
+    {
+        $cars = Car::select('id', 'name_ar')->get();
+        return response()->json($cars);
+    }
 
     public function carsBasedOnModel(Request $request)
     {
