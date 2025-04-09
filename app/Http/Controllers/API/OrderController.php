@@ -118,8 +118,8 @@ $this->sendMail($order);
         $data['terms_and_privacy'] = $data['terms_and_privacy'] ? 1 : 0;
 
         $order = Order::create($data);
-        $this->newOfferOrderNotification($order);
-        $this->sendMail($order);
+        // $this->newOfferOrderNotification($order);
+        // $this->sendMail($order);
 
         return response()->json([
             'success' => true,
