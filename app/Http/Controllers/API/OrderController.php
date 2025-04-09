@@ -113,11 +113,32 @@ $this->sendMail($order);
     public function OfferOrder(storeofferorderRequest $request)
     {
         $data = $request->validated();
+
+        // Check if city_id exists
+        if (!City::find($data['city_id'])) {
+            return response()->json([
+                'success' => false,
+                'message' => 'City not found'
+            ], 404);
+        }
+
+        // Check if car_id exists
+        if (!Car::find($data['car_id'])) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Car not found'
+            ], 404);
+        }
+
+        // Prepare order data
         $data['type'] = 'offer_order';
         $data['phone'] = convertArabicNumbers($data['phone']);
         $data['terms_and_privacy'] = $data['terms_and_privacy'] ? 1 : 0;
 
+        // Create the order
         $order = Order::create($data);
+
+        // Optionally you can trigger notifications or emails here
         // $this->newOfferOrderNotification($order);
         // $this->sendMail($order);
 
