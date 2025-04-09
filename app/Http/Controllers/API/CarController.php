@@ -29,6 +29,7 @@ class CarController extends Controller
     }
     public function all_cars()
     {
+        dd('dd');
         $cars = Car::select('id', 'name_ar')->get();
         return response()->json($cars);
     }
