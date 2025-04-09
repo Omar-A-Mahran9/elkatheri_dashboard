@@ -32,7 +32,7 @@ class CarController extends Controller
         $cars = Car::get()->map(function ($car) {
             return [
                 'id' => $car->id,
-                'name_ar' => $car->name_ar,
+                'name' => $car->name,
             ];
         });
 
