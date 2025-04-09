@@ -29,9 +29,16 @@ class CarController extends Controller
     }
     public function all_cars()
     {
-        $cars = Car::get();
+        $cars = Car::get()->map(function ($car) {
+            return [
+                'id' => $car->id,
+                'name_ar' => $car->name_ar,
+            ];
+        });
+
         return response()->json($cars);
     }
+
 
     public function carsBasedOnModel(Request $request)
     {
