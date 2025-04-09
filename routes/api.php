@@ -40,6 +40,8 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
     Route::post('individuals-orders', 'OrderController@storeIndividualOrder');
     Route::post('corporates-orders', 'OrderController@storeCorporatesOrder');
     Route::post('unavailable-car', 'OrderController@unavailableCar');
+    Route::post('offer-order/{offer}', 'OrderController@OfferOrder');
+
     Route::get('purchase-form-info', 'OrderController@purchaseInfo');
     Route::get('cars-filter-data', 'OrderController@filterData');
     Route::get('time-slots', 'ScheduleController@timeSlots');

@@ -36,6 +36,11 @@ class Order extends Model
         return $this->belongsTo(Bank::class);
     }
 
+    public function offer()
+    {
+        return $this->belongsTo(Offer::class);
+    }
+
     public function fundingBank()
     {
         return $this->belongsTo(Bank::class, 'funding_bank_id');

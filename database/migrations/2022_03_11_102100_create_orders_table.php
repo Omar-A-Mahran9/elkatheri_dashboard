@@ -19,6 +19,8 @@ class CreateOrdersTable extends Migration
             $table->unsignedBigInteger('status_id')->default(1);
             $table->unsignedBigInteger('bank_id')->nullable();
             $table->unsignedBigInteger('car_id')->nullable();
+            $table->unsignedBigInteger('offer_id')->nullable();
+
             $table->unsignedBigInteger('opened_by')->nullable();
             $table->unsignedBigInteger('color_id')->nullable();
             $table->unsignedBigInteger('city_id')->nullable();
@@ -26,7 +28,7 @@ class CreateOrdersTable extends Migration
             $table->unsignedBigInteger('funding_bank_id')->nullable();
             $table->string('city_name')->nullable();
 
-            $table->enum('type',['individual','organization', 'unavailable_car']);
+            $table->enum('type',['individual','organization', 'unavailable_car', 'offer_order']);
             $table->enum('payment_type',['cash','finance']);
 
             $table->string('id_and_driving_license')->nullable();
@@ -115,6 +117,12 @@ class CreateOrdersTable extends Migration
             $table->foreign('funding_bank_id')
             ->references('id')
             ->on('banks')
+            ->onUpdate('cascade')
+            ->onDelete('cascade');
+
+            $table->foreign('offer_id')
+            ->references('id')
+            ->on('offers')
             ->onUpdate('cascade')
             ->onDelete('cascade');
         });

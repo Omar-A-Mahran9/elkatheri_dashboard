@@ -35,6 +35,28 @@ trait NotificationTrait
         }
     }
 
+    protected function newOfferOrderNotification($order)
+{
+    if ($order) {
+        $titleAr = "طلب سيارة من عرض";
+        $titleEn = "Offer Order Request";
+        $messageAr = "قام {$order->name} بطلب سيارة من عرض لسيارة ({$order->car->name_ar }) من الموقع. اضغط لرؤية تفاصيل الطلب والتواصل معه";
+        $messageEn = "{$order->name} requested a car from an offer for the ({$order->car->name_ar }) from the site. Click to view the order details and contact him.";
+        $icon = '<i class="fas fa-car-alt fs-1 text-warning"></i>';
+        $color = 'warning';
+
+        storeAndPushNotification(
+            $titleAr,
+            $titleEn,
+            $messageAr,
+            $messageEn,
+            $icon,
+            $color,
+            route('dashboard.orders.show', $order)
+        );
+    }
+}
+
     protected function individualOrderNotification($order)
     {
         if ($order) {

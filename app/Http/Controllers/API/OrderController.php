@@ -19,6 +19,7 @@ use App\Http\Resources\ServiceResource;
 use App\Http\Requests\storeUnavailableCarRequest;
 use App\Http\Requests\StoreCorporatesOrderRequest;
 use App\Http\Requests\StoreIndividualOrderRequest;
+use App\Http\Requests\storeofferorderRequest;
 use App\Http\Resources\FundingOrganizationResource;
 use App\Models\Employee;
 
@@ -107,6 +108,24 @@ $this->sendMail($order);
         $this->sendMail($order);
 
         return response()->json(["order created successfully"]);
+    }
+
+    public function OfferOrder(storeofferorderRequest $request)
+    {
+        $data = $request->validated();
+        $data['type'] = 'offer_order';
+        $data['phone'] = convertArabicNumbers($data['phone']);
+        $data['terms_and_privacy'] = $data['terms_and_privacy'] ? 1 : 0;
+
+        $order = Order::create($data);
+        $this->newOfferOrderNotification($order);
+        $this->sendMail($order);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Order created successfully',
+            'order_id' => $order->id
+        ]);
     }
 
     public function filterData()
