@@ -314,13 +314,13 @@ class OrderController extends Controller
                 'refresh_token' => $token->refresh_token,        // The stored refresh token
                 'client_id' => env('ZOHO_CLIENT_ID'),            // Your Zoho Client ID
                 'client_secret' => env('ZOHO_CLIENT_SECRET'),    // Your Zoho Client Secret
-                'grant_type' => 'refresh_token'               // Grant type for refreshing token
+                'grant_type' => 'refresh_token'                   // Grant type for refreshing token
             ]);
-dd(env('ZOHO_CLIENT_ID'),env('ZOHO_CLIENT_SECRET'),$token);
+
             // Log the full response body for debugging
             Log::error('Zoho access token refresh response', [
                 'status_code' => $response->status(),
-                'response_body' => $response->body()
+                'response_body' => $response->body()  // Capture the full body of the response for detailed error
             ]);
 
             // Check if the response is successful
@@ -340,14 +340,13 @@ dd(env('ZOHO_CLIENT_ID'),env('ZOHO_CLIENT_SECRET'),$token);
                 // Log the error and response body for debugging
                 Log::error('Failed to refresh Zoho access token', [
                     'status_code' => $response->status(),
-                    'response_body' => $response->body()
+                    'response_body' => $response->body()  // Log the response body to see the detailed error from Zoho
                 ]);
 
-                // Optionally, you can send the raw response back to identify the exact issue
+                // If the response body is too long, you can limit it or save it to a file for review
                 throw new \Exception('Failed to refresh Zoho access token: ' . $response->body());
             }
         }
-
 
 
 
