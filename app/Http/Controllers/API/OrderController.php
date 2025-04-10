@@ -306,25 +306,36 @@ class OrderController extends Controller
 
         private function refreshAccessToken($token)
         {
-            dd($token);
+            // Log the token for debugging
+ 
+            // Send a request to Zoho to refresh the access token
             $response = Http::post('https://accounts.zoho.com/oauth/v2/token', [
-                'client_id' => env('ZOHO_CLIENT_ID'),
-                'client_secret' => env('ZOHO_CLIENT_SECRET'),
-                'refresh_token' => $token->refresh_token,
-                'grant_type' => 'refresh_token',
+                'client_id' => env('ZOHO_CLIENT_ID'),            // Your Zoho Client ID
+                'client_secret' => env('ZOHO_CLIENT_SECRET'),    // Your Zoho Client Secret
+                'refresh_token' => $token->refresh_token,        // The stored refresh token
+                'grant_type' => 'refresh_token',                 // Grant type for refreshing token
             ]);
 
+            // Check if the response is successful
             if ($response->successful()) {
-                // Save the new access token and expiration time
+                // Get the new token data from the response
                 $newToken = $response->json();
-                $token->access_token = $newToken['access_token'];
-                $token->expires_at = now()->addSeconds($newToken['expires_in']);
+
+                // Update the ZohoToken record in the database
+                $token->access_token = $newToken['access_token'];  // Save the new access token
+                $token->expires_at = now()->addSeconds($newToken['expires_in']);  // Set the expiration time
+
+                // Save the updated token to the database
                 $token->save();
+
+                // Optionally, you can log or return a message indicating the token was refreshed
+                return $newToken['access_token'];  // Return the new access token
             } else {
-                // Handle failure: Log error if refresh fails
-                throw new \Exception('Failed to refresh Zoho access token');
+                // Handle the error if the token refresh fails
+                throw new \Exception('Failed to refresh Zoho access token: ' . $response->body());
             }
         }
+
 
 
 }
