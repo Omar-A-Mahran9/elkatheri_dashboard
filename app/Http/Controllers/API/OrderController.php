@@ -221,14 +221,20 @@ class OrderController extends Controller
             // Retrieve the Zoho access token from the DB
             $token = ZohoToken::first();
 
+            // Check if the access token is expired and refresh it if necessary
+            if ($this->isTokenExpired($token)) {
+                $this->refreshAccessToken($token);
+            }
+
             // Split the full name into first and last name
             $nameParts = explode(' ', $order->name, 2); // Split the name by the first space
 
             // Default values in case of no space in the name
             $firstName = $nameParts[0] ?? 'Unknown';
             $lastName = $nameParts[1] ?? 'Unknown';
-             // Prepare the data to be sent to Zoho CRM
-             $description = "طلب سيارة رقم: " . $order->id . " واسمها: " . $order->car->name . " وموديل: " . $order->car->year;
+
+            // Prepare the data to be sent to Zoho CRM
+            $description = "طلب سيارة رقم: " . $order->id . " واسمها: " . $order->car->name . " وموديل: " . $order->car->year;
 
             $orderData = [
                 'data' => [
@@ -237,7 +243,7 @@ class OrderController extends Controller
                         "Last_Name" => $lastName,    // Customer's last name
                         "Email" => $order->email ?? $order->organization_email ?? 'noemail@example.com', // Customer's email
                         "Phone" => $order->phone,    // Customer's phone number
-                        "Mobile" => $order->phone,    // Customer's phone number
+                        "Mobile" => $order->phone,   // Customer's mobile number
                         "Company" => $order->organization_name ?? 'No Organization',  // Organization (if any)
                         "Lead_Source" => 'website',  // Source of the lead
                         "Lead_Status" => 'New',      // Status of the lead (New by default)
@@ -245,22 +251,22 @@ class OrderController extends Controller
                         "Website" => 'https://alkathirimotors.com.sa/', // Website URL
                         "City" => $order->city_name ?? 'Unknown City',  // City
                         "Description" => $description ?? 'No description',  // Description of the lead
-                        "Model Year" => +$order->car->year??2024,  // Placeholder for Model Year (you can adjust this dynamically)
-                 "Car_Model" => $order->car->model_name??'-',
-                     "Purchase_style" => $order->payment_type??'-',
+                        // "Model Year" => $order->car->year ?? 2024,  // Model Year (adjust dynamically)
+                        // "Car Model" => $order->car->model_name ?? '-',  // Car Model
+                        // "Purchase style" => $order->payment_type ?? '-', // Purchase Style (cash/finance)
                         "Lead_Type" => 'Warm',  // Lead type (Hot, Warm, Cold)
-                         "Created_Time" => $order->created_at->toIso8601String() ?? now()->toIso8601String(), // Lead creation time (ensure ISO format)
-                         "Modified_Time" => $order->updated_at->toIso8601String() ?? now()->toIso8601String(), // Lead modified time
-
-
-                                    ]
+                        "Created_Time" => $order->created_at->toIso8601String() ?? now()->toIso8601String(), // Lead creation time
+                        "Modified_Time" => $order->updated_at->toIso8601String() ?? now()->toIso8601String(), // Lead modified time
+                    ]
                 ]
             ];
+
             // Send the data to Zoho CRM using the Zoho API
             $response = Http::withToken($token->access_token)
                             ->acceptJson()  // Ensure JSON response is accepted
                             ->post('https://www.zohoapis.com/crm/v2/Leads', $orderData);
-                            dd($response);
+
+            dd($response);
 
             // Check if the response is successful
             if ($response->successful()) {
@@ -276,5 +282,46 @@ class OrderController extends Controller
                 ], 400);
             }
         }
+
+        /**
+         * Check if the Zoho access token is expired.
+         *
+         * @param  ZohoToken  $token
+         * @return bool
+         */
+        private function isTokenExpired($token)
+        {
+            // You can use the expiration time to check if the token is expired
+            $currentTime = now()->timestamp; // Current timestamp
+            return $currentTime > $token->expires_at;  // Compare with the token's expiration timestamp
+        }
+
+        /**
+         * Refresh the Zoho access token using the refresh token.
+         *
+         * @param  ZohoToken  $token
+         * @return void
+         */
+        private function refreshAccessToken($token)
+        {
+            $response = Http::post('https://accounts.zoho.com/oauth/v2/token', [
+                'client_id' => env('ZOHO_CLIENT_ID'),
+                'client_secret' => env('ZOHO_CLIENT_SECRET'),
+                'refresh_token' => $token->refresh_token,
+                'grant_type' => 'refresh_token',
+            ]);
+
+            if ($response->successful()) {
+                // Save the new access token and expiration time
+                $newToken = $response->json();
+                $token->access_token = $newToken['access_token'];
+                $token->expires_at = now()->addSeconds($newToken['expires_in']);
+                $token->save();
+            } else {
+                // Handle failure: Log error if refresh fails
+                throw new \Exception('Failed to refresh Zoho access token');
+            }
+        }
+
 
 }
