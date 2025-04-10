@@ -306,8 +306,9 @@ class OrderController extends Controller
 
         private function refreshAccessToken($token)
         {
+            dd($token->refresh_token);
             // Log the token for debugging
- 
+
             // Send a request to Zoho to refresh the access token
             $response = Http::post('https://accounts.zoho.com/oauth/v2/token', [
                 'client_id' => env('ZOHO_CLIENT_ID'),            // Your Zoho Client ID
