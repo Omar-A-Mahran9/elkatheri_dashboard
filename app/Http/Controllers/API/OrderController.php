@@ -237,8 +237,7 @@ class OrderController extends Controller
             $firstName = $nameParts[0] ?? 'Unknown';
             $lastName = $nameParts[1] ?? 'Unknown';
 
-            // Prepare the data to be sent to Zoho CRM
-            $description = "طلب سيارة رقم: " . $order->id . " واسمها: " . $order->car->name??"" . " وموديل: " . $order->car->year??"";
+            $description = "طلب سيارة رقم: " . $order->id . " واسمها: " . ($order->car->name ?? '') . " وموديل: " . ($order->car->year ?? '');
 
             $orderData = [
                 'data' => [
