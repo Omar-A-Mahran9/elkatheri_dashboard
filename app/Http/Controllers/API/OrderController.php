@@ -293,10 +293,14 @@ class OrderController extends Controller
          */
         private function isTokenExpired($token)
         {
-            // You can use the expiration time to check if the token is expired
+            // Get the current time in Unix timestamp
             $currentTime = now()->timestamp; // Current timestamp
-            dd($currentTime);
-            return $currentTime > $token->expires_at;  // Compare with the token's expiration timestamp
+
+            // Convert the 'expires_at' (which is in datetime format) to a Unix timestamp
+            $expiresAt = \Carbon\Carbon::parse($token->expires_at)->timestamp;
+
+            // Check if the token has expired
+            return $currentTime > $expiresAt;
         }
 
         /**
