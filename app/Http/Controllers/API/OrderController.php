@@ -269,8 +269,7 @@ class OrderController extends Controller
                             ->acceptJson()  // Ensure JSON response is accepted
                             ->post('https://www.zohoapis.com/crm/v2/Leads', $orderData);
 
-dd($response);
-            // Check if the response is successful
+             // Check if the response is successful
             if ($response->successful()) {
                 return response()->json([
                     'message' => 'Order sent to Zoho CRM successfully.',
