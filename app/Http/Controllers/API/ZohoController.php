@@ -65,12 +65,15 @@ public function refreshZohoAccessToken()
 {
     $token = ZohoToken::first(); // استرجاع التوكن من قاعدة البيانات
 
-    $response = Http::asForm()->post('https://accounts.zoho.com/oauth/v2/token', [
+    $response = Http::withHeaders([
+        'Content-Type' => 'application/x-www-form-urlencoded',
+    ])->post('https://accounts.zoho.com/oauth/v2/token', [
         'refresh_token' => $token->refresh_token,
         'client_id' => env('ZOHO_CLIENT_ID'),
         'client_secret' => env('ZOHO_CLIENT_SECRET'),
         'grant_type' => 'refresh_token',
     ]);
+
 
     $data = $response->json();
 
