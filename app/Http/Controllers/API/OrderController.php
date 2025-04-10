@@ -243,11 +243,11 @@ class OrderController extends Controller
             $orderData = [
                 'data' => [
                     [
-                        "First_Name" => $firstName,  // Customer's first name
-                        "Last_Name" => $lastName,    // Customer's last name
+                        "First_Name" => $firstName??" ",  // Customer's first name
+                        "Last_Name" => $lastName??" ",    // Customer's last name
                         "Email" => $order->email ?? $order->organization_email ?? 'noemail@example.com', // Customer's email
-                        "Phone" => $order->phone,    // Customer's phone number
-                        "Mobile" => $order->phone,   // Customer's mobile number
+                        "Phone" => $order->phone??" ",    // Customer's phone number
+                        "Mobile" => $order->phone??" ",   // Customer's mobile number
                         "Company" => $order->organization_name ?? 'No Organization',  // Organization (if any)
                         "Lead_Source" => 'website',  // Source of the lead
                         "Lead_Status" => 'New',      // Status of the lead (New by default)
@@ -270,7 +270,7 @@ class OrderController extends Controller
                             ->acceptJson()  // Ensure JSON response is accepted
                             ->post('https://www.zohoapis.com/crm/v2/Leads', $orderData);
 
-
+dd($response);
             // Check if the response is successful
             if ($response->successful()) {
                 return response()->json([
