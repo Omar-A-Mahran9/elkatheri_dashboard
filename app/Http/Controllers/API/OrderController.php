@@ -246,8 +246,8 @@ class OrderController extends Controller
                         "City" => $order->city_name ?? 'Unknown City',  // City
                         "Description" => $description ?? 'No description',  // Description of the lead
                         "Model Year" => +$order->car->year??2024,  // Placeholder for Model Year (you can adjust this dynamically)
-                        // "Car_Model" => $order->car->model_name??'-',
-                        // "Purchase_style" => $order->payment_type??'-',
+                 "Car_Model" => $order->car->model_name??'-',
+                     "Purchase_style" => $order->payment_type??'-',
                         "Lead_Type" => 'Warm',  // Lead type (Hot, Warm, Cold)
                          "Created_Time" => $order->created_at->toIso8601String() ?? now()->toIso8601String(), // Lead creation time (ensure ISO format)
                          "Modified_Time" => $order->updated_at->toIso8601String() ?? now()->toIso8601String(), // Lead modified time
