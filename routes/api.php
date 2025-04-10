@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\CampaignController;
-use App\Http\Controllers\api\ZohoController;
+use App\Http\Controllers\API\ZohoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
