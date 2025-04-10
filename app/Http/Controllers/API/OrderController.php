@@ -228,7 +228,7 @@ class OrderController extends Controller
             // Check if the access token is expired and refresh it if necessary
             if ($this->isTokenExpired($token)) {
 
-                $this->refreshAccessToken($token);
+                $this->refreshZohoAccessToken($token);
             }
 
             // Split the full name into first and last name
@@ -303,50 +303,33 @@ class OrderController extends Controller
             return $currentTime > $expiresAt;
         }
 
-
-        private function refreshAccessToken($token)
+        public function refreshZohoAccessToken()
         {
-            // Log the token for debugging
-            Log::debug('Attempting to refresh Zoho access token', ['refresh_token' => $token->refresh_token]);
+            $token = ZohoToken::first(); // استرجاع التوكن من قاعدة البيانات
 
-            // Send a request to Zoho to refresh the access token
-            $response = Http::post('https://accounts.zoho.com/oauth/v2/token', [
-                'refresh_token' => $token->refresh_token,        // The stored refresh token
-                'client_id' => env('ZOHO_CLIENT_ID'),            // Your Zoho Client ID
-                'client_secret' => env('ZOHO_CLIENT_SECRET'),    // Your Zoho Client Secret
-                'grant_type' => 'refresh_token'                   // Grant type for refreshing token
+            $response = Http::asForm()->post('https://accounts.zoho.com/oauth/v2/token', [
+                'refresh_token' => $token->refresh_token,
+                'client_id' => env('ZOHO_CLIENT_ID'),
+                'client_secret' => env('ZOHO_CLIENT_SECRET'),
+                'grant_type' => 'refresh_token',
             ]);
 
-            // Log the full response body for debugging
-            Log::error('Zoho access token refresh response', [
-                'status_code' => $response->status(),
-                'response_body' => $response->body()  // Capture the full body of the response for detailed error
-            ]);
 
-            // Check if the response is successful
-            if ($response->successful()) {
-                // Get the new token data from the response
-                $newToken = $response->json();
+            $data = $response->json();
 
-                // Save the new access token and expiration time
-                $token->access_token = $newToken['access_token'];
-                $token->expires_at = now()->addSeconds($newToken['expires_in']);
-                $token->save();
+            // تحديث التوكن في قاعدة البيانات
+            ZohoToken::updateOrCreate(
+                ['id' => 1],  // أو استخدم أي معرّف ترغب به
+                [
+                    'access_token' => $data['access_token'],
+                    'refresh_token' => $data['refresh_token'],
+                    'expires_at' => now()->addSeconds($data['expires_in']),
+                ]
+            );
 
-                // Log success and return new access token
-                Log::info('Zoho access token refreshed successfully');
-                return $newToken['access_token'];
-            } else {
-                // Log the error and response body for debugging
-                Log::error('Failed to refresh Zoho access token', [
-                    'status_code' => $response->status(),
-                    'response_body' => $response->body()  // Log the response body to see the detailed error from Zoho
-                ]);
-
-                // If the response body is too long, you can limit it or save it to a file for review
-                throw new \Exception('Failed to refresh Zoho access token: ' . $response->body());
-            }
+            return response()->json($data);  // إرجاع التوكنات الجديدة
         }
+
 
 
 

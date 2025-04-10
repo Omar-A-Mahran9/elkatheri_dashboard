@@ -71,7 +71,6 @@ public function refreshZohoAccessToken()
         'client_secret' => env('ZOHO_CLIENT_SECRET'),
         'grant_type' => 'refresh_token',
     ]);
-    dd($response);
 
 
     $data = $response->json();
