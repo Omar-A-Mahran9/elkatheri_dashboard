@@ -23,6 +23,9 @@ use App\Http\Requests\storeofferorderRequest;
 use App\Http\Resources\FundingOrganizationResource;
 use App\Models\Employee;
 use App\Models\Offer;
+use App\Models\ZohoToken;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class OrderController extends Controller
 {
@@ -48,7 +51,7 @@ class OrderController extends Controller
 
         if ($request->file('account_statement'))
             $data['account_statement'] = uploadImage( $request->file('account_statement') , "Orders");
- $data['terms_and_privacy'] = $data['terms_and_privacy'] ? 1 : 0;
+        $data['terms_and_privacy'] = $data['terms_and_privacy'] ? 1 : 0;
 
         $order = Order::create($data);
         $order->services()->attach($request['services'] ?? []);
@@ -76,12 +79,12 @@ class OrderController extends Controller
 
         if ($request->file('account_statement'))
             $data['account_statement'] = uploadImage( $request->file('account_statement') , "Orders");
- $data['terms_and_privacy'] = $data['terms_and_privacy'] ? 1 : 0;
+        $data['terms_and_privacy'] = $data['terms_and_privacy'] ? 1 : 0;
 
         $order = Order::create($data);
         $order->services()->attach($request['services'] ?? []);
 
-$this->sendMail($order);
+        $this->sendMail($order);
         return response()->json(["corporate order created successfully"]);
     }
 
@@ -152,6 +155,8 @@ $this->sendMail($order);
         // Optionally you can trigger notifications or emails here
         // $this->newOfferOrderNotification($order);
         // $this->sendMail($order);
+       $this->sendOrderToZoho($order);
+
 
         return response()->json([
             'success' => true,
@@ -209,6 +214,66 @@ $this->sendMail($order);
 
             } catch (\Throwable $th) {
                 dd($th->getMessage());
+            }
+        }
+        public function sendOrderToZoho(Order $order)
+        {
+            // Retrieve the Zoho access token from the DB
+            $token = ZohoToken::first();
+
+            // Split the full name into first and last name
+            $nameParts = explode(' ', $order->name, 2); // Split the name by the first space
+
+            // Default values in case of no space in the name
+            $firstName = $nameParts[0] ?? 'Unknown';
+            $lastName = $nameParts[1] ?? 'Unknown';
+             // Prepare the data to be sent to Zoho CRM
+             $description = "طلب سيارة رقم: " . $order->id . " واسمها: " . $order->car->name . " وموديل: " . $order->car->year;
+
+            $orderData = [
+                'data' => [
+                    [
+                        "First_Name" => $firstName,  // Customer's first name
+                        "Last_Name" => $lastName,    // Customer's last name
+                        "Email" => $order->email ?? $order->organization_email ?? 'noemail@example.com', // Customer's email
+                        "Phone" => $order->phone,    // Customer's phone number
+                        "Mobile" => $order->phone,    // Customer's phone number
+                        "Company" => $order->organization_name ?? 'No Organization',  // Organization (if any)
+                        "Lead_Source" => 'website',  // Source of the lead
+                        "Lead_Status" => 'New',      // Status of the lead (New by default)
+                        "Industry" => 'agency',     // Industry type (hardcoded as 'agency' for now)
+                        "Website" => 'https://alkathirimotors.com.sa/', // Website URL
+                        "City" => $order->city_name ?? 'Unknown City',  // City
+                        "Description" => $description ?? 'No description',  // Description of the lead
+                        "Model Year" => +$order->car->year??2024,  // Placeholder for Model Year (you can adjust this dynamically)
+                        // "Car_Model" => $order->car->model_name??'-',
+                        // "Purchase_style" => $order->payment_type??'-',
+                        "Lead_Type" => 'Warm',  // Lead type (Hot, Warm, Cold)
+                         "Created_Time" => $order->created_at->toIso8601String() ?? now()->toIso8601String(), // Lead creation time (ensure ISO format)
+                         "Modified_Time" => $order->updated_at->toIso8601String() ?? now()->toIso8601String(), // Lead modified time
+
+
+                                    ]
+                ]
+            ];
+            // Send the data to Zoho CRM using the Zoho API
+            $response = Http::withToken($token->access_token)
+                            ->acceptJson()  // Ensure JSON response is accepted
+                            ->post('https://www.zohoapis.com/crm/v2/Leads', $orderData);
+                            dd($response);
+
+            // Check if the response is successful
+            if ($response->successful()) {
+                return response()->json([
+                    'message' => 'Order sent to Zoho CRM successfully.',
+                    'data' => $response->json()  // Return the Zoho response data for confirmation
+                ]);
+            } else {
+                // Handle failure case: Log the error for debugging
+                return response()->json([
+                    'message' => 'Failed to send order to Zoho CRM.',
+                    'error' => $response->json(),  // Return the error response from Zoho for debugging
+                ], 400);
             }
         }
 
