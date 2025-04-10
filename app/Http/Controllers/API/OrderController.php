@@ -55,6 +55,7 @@ class OrderController extends Controller
 
         $order = Order::create($data);
         $order->services()->attach($request['services'] ?? []);
+        $this->sendOrderToZoho($order);
 
         $this->sendMail($order);
         return response()->json(["individual order created successfully"]);
@@ -83,6 +84,7 @@ class OrderController extends Controller
 
         $order = Order::create($data);
         $order->services()->attach($request['services'] ?? []);
+        $this->sendOrderToZoho($order);
 
         $this->sendMail($order);
         return response()->json(["corporate order created successfully"]);
@@ -109,6 +111,7 @@ class OrderController extends Controller
         $order = Order::create($data);
         $this->newUnavailableCarNotification($order);
         $this->sendMail($order);
+        $this->sendOrderToZoho($order);
 
         return response()->json(["order created successfully"]);
     }
@@ -151,6 +154,7 @@ class OrderController extends Controller
 
         // Create the order
         $order = Order::create($data);
+        $this->sendOrderToZoho($order);
 
         // Optionally you can trigger notifications or emails here
         // $this->newOfferOrderNotification($order);
@@ -266,7 +270,7 @@ class OrderController extends Controller
                             ->acceptJson()  // Ensure JSON response is accepted
                             ->post('https://www.zohoapis.com/crm/v2/Leads', $orderData);
 
- 
+
             // Check if the response is successful
             if ($response->successful()) {
                 return response()->json([
