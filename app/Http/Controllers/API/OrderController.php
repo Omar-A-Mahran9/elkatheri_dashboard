@@ -295,7 +295,7 @@ class OrderController extends Controller
         {
             // You can use the expiration time to check if the token is expired
             $currentTime = now()->timestamp; // Current timestamp
-            dd($currentTime > $token->expires_at);
+            dd($token->expires_at);
             return $currentTime > $token->expires_at;  // Compare with the token's expiration timestamp
         }
 
