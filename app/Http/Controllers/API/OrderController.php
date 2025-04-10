@@ -314,14 +314,12 @@ class OrderController extends Controller
             ]);
 
             $data = $response->json();
-            dd($data);
 
             // تحديث التوكن في قاعدة البيانات
             ZohoToken::updateOrCreate(
                 ['id' => 1],  // أو استخدم أي معرّف ترغب به
                 [
                     'access_token' => $data['access_token'],
-                    'refresh_token' => $data['refresh_token'],
                     'expires_at' => now()->addSeconds($data['expires_in']),
                 ]
             );
