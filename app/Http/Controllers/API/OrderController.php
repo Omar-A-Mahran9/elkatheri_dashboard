@@ -52,6 +52,7 @@ class OrderController extends Controller
         if ($request->file('account_statement'))
             $data['account_statement'] = uploadImage( $request->file('account_statement') , "Orders");
         $data['terms_and_privacy'] = $data['terms_and_privacy'] ? 1 : 0;
+        $data['phone'] = convertArabicNumbers($data['phone']);
 
         $order = Order::create($data);
         $order->services()->attach($request['services'] ?? []);
