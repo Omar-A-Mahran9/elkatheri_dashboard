@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Models\ZohoToken;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
@@ -33,6 +34,14 @@ class ZohoController extends Controller
         ]);
 
         $data = $response->json();
+        ZohoToken::updateOrCreate(
+            ['id' => 1],
+            [
+                'access_token' => $data['access_token'],
+                'refresh_token' => $data['refresh_token'],
+                'expires_at' => now()->addSeconds($data['expires_in']),
+            ]
+        );
 
         // Save access & refresh tokens to DB or cache
         // You can return or log them for now
