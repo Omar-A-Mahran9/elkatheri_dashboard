@@ -303,14 +303,10 @@ class OrderController extends Controller
             return $currentTime > $expiresAt;
         }
 
-        /**
-         * Refresh the Zoho access token using the refresh token.
-         *
-         * @param  ZohoToken  $token
-         * @return void
-         */
+
         private function refreshAccessToken($token)
         {
+            dd($token);
             $response = Http::post('https://accounts.zoho.com/oauth/v2/token', [
                 'client_id' => env('ZOHO_CLIENT_ID'),
                 'client_secret' => env('ZOHO_CLIENT_SECRET'),
