@@ -311,12 +311,12 @@ class OrderController extends Controller
 
             // Send a request to Zoho to refresh the access token
             $response = Http::post('https://accounts.zoho.com/oauth/v2/token', [
+                'refresh_token' => $token->refresh_token,        // The stored refresh token
                 'client_id' => env('ZOHO_CLIENT_ID'),            // Your Zoho Client ID
                 'client_secret' => env('ZOHO_CLIENT_SECRET'),    // Your Zoho Client Secret
-                'refresh_token' => $token->refresh_token,        // The stored refresh token
-                'grant_type' => 'refresh_token',                 // Grant type for refreshing token
+                'grant_type' => 'refresh_token'               // Grant type for refreshing token
             ]);
-
+dd(env('ZOHO_CLIENT_ID'),env('ZOHO_CLIENT_SECRET'),$token);
             // Log the full response body for debugging
             Log::error('Zoho access token refresh response', [
                 'status_code' => $response->status(),
