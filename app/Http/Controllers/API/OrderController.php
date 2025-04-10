@@ -227,6 +227,7 @@ class OrderController extends Controller
 
             // Check if the access token is expired and refresh it if necessary
             if ($this->isTokenExpired($token)) {
+
                 $this->refreshAccessToken($token);
             }
 
@@ -294,6 +295,7 @@ class OrderController extends Controller
         {
             // You can use the expiration time to check if the token is expired
             $currentTime = now()->timestamp; // Current timestamp
+            dd($currentTime > $token->expires_at);
             return $currentTime > $token->expires_at;  // Compare with the token's expiration timestamp
         }
 
