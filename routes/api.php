@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\CampaignController;
+use App\Http\Controllers\API\NewController;
 use App\Http\Controllers\API\ZohoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -51,6 +52,7 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
     Route::post('make-appointment', 'AppointmentController@store');
     Route::get('banks', 'BankController');
     Route::get('getCampaignDatafromCookies', [CampaignController::class,'getCampaignData']);
+    Route::post('url', [NewController::class,'geturl']);
 
     Route::get('/zoho/auth', [ZohoController::class, 'redirectToZoho']);
     Route::get('/zoho/callback', [ZohoController::class, 'handleZohoCallback']);

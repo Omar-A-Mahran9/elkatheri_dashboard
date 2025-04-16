@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\NewResource;
+use App\Models\Campaign;
 use App\Models\News;
 use Illuminate\Http\Request;
 
@@ -26,5 +27,26 @@ class NewController extends Controller
     public function singleNew(News $news)
     {
         return new NewResource($news);
+    }
+
+    public function geturl(Request $request)
+    {
+        $shortenCode = $request->input('shorten_code');
+
+        if (empty($shortenCode)) {
+            return response()->json(['error' => 'shorten_code is required'], 422);
+        }
+
+        // Find the campaign by shorten_code
+        $campaign = Campaign::where('shorten_code', $shortenCode)->first();
+
+        if (!$campaign) {
+            return response()->json(['error' => 'Campaign not found'], 404);
+        }
+
+        // Return the website_url_new
+        return response()->json([
+            'website_url_new' => $campaign->website_url_new
+        ]);
     }
 }
