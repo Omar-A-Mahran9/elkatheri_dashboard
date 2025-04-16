@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\NewResource;
 use App\Models\Campaign;
+use App\Models\CampaignVisit;
 use App\Models\News;
 use Illuminate\Http\Request;
 
@@ -43,6 +44,13 @@ class NewController extends Controller
         if (!$campaign) {
             return response()->json(['error' => 'Campaign not found'], 404);
         }
+
+        // Log the visit
+        CampaignVisit::create([
+            'campaign_id' => $campaign->id,
+            'ip_address'  => $request->ip(),
+            'user_agent'  => $request->header('User-Agent'),
+        ]);
 
         // Return the website_url_new
         return response()->json([
