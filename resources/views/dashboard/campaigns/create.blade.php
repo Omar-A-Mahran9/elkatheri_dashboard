@@ -128,12 +128,11 @@
                     <div class="col-md-12 fv-row">
                         <label class="fs-5 fw-bold mb-2">{{ __('Generated Link') }}</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" name="website_url_new" id="generated-url"
+                            <input type="hidden" class="form-control" name="website_url_new" id="generated-url"
                                 placeholder="{{ __('generate URL') }}" readonly />
-                            <button type="button" class="btn btn-outline-secondary bordered-2" id="copy-btn"
-                                title="Copy" style="border: 1px solid rgb(193, 193, 193)">
-                                <i class="fas fa-copy"></i> <!-- Font Awesome -->
-                            </button>
+                            <input type="text" class="form-control" id="generated-fake-url"
+                                placeholder="{{ __('generate URL') }}" readonly />
+
                         </div>
                         <p class="invalid-feedback" id="website_url_new"></p>
 
@@ -151,12 +150,14 @@
                         <input type="text" class="form-control" id="shorten-url" name="shorten_link"
                             placeholder="{{ __('generate a shortened URL') }}" readonly />
                     </div>
-                    <div class="col-md-4 fv-row">
-                        <input class="btn btn-primary" type="button" id="generate-shorten-btn"
+                    <div class="col-md-4 fv-row d-flex">
+                        <input class="btn btn-primary me-2" type="button" id="generate-shorten-btn"
                             value="{{ __('Create shorten url') }}">
-                        <p class="invalid-feedback" id="shorten_link"></p>
-
+                        <button type="button" class="btn btn-outline-secondary" id="copy-btn" title="Copy">
+                            <i class="fas fa-copy"></i>
+                        </button>
                     </div>
+
                 </div>
             </div>
 
@@ -199,10 +200,19 @@
                 if (utmCampaign) params.set("utm_campaign", utmCampaign);
 
                 let paramString = params.toString();
-                let generatedUrl = baseUrl ? baseUrl + (paramString ? `?${paramString}` : "") : "";
+
+                let generatedUrl = baseUrl;
+                if (paramString) {
+                    // if URL already has a "?", append using "&"
+                    generatedUrl += (baseUrl.includes('?') ? '&' : '?') + paramString;
+                }
+
+                let encodedUrl = btoa(generatedUrl);
+                document.getElementById("generated-fake-url").value = encodedUrl;
 
                 document.getElementById("generated-url").value = generatedUrl;
             }
+
 
             document.querySelectorAll(
                 "input[name='campaign_source'], input[name='campaign_medium'], input[name='campaign_name'], #website_url_inp"
@@ -210,29 +220,43 @@
                 input.addEventListener("input", generateUTMUrl);
             });
 
+            // Copy button logic (for shortened URL)
             document.getElementById("copy-btn").addEventListener("click", function() {
-                let generatedUrlInput = document.getElementById("generated-url");
-                if (generatedUrlInput.value) {
-                    navigator.clipboard.writeText(generatedUrlInput.value).then(() => {
+                let shortenUrlInput = document.getElementById("shorten-url");
+                if (shortenUrlInput.value) {
+                    navigator.clipboard.writeText(shortenUrlInput.value).then(() => {
                         let copyBtn = document.getElementById("copy-btn");
-                        let originalHTML = copyBtn.innerHTML; // Save original icon & text
+                        let originalHTML = copyBtn.innerHTML;
 
-                        copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                        copyBtn.innerHTML = '<i class="fas fa-check"></i>';
                         setTimeout(() => {
-                            copyBtn.innerHTML = originalHTML; // Restore original icon
+                            copyBtn.innerHTML = originalHTML;
                         }, 1000);
                     });
                 }
             });
 
-            generateUTMUrl(); // Generate URL on page load if values exist
-        });
+            // Generate shorten link
+            document.getElementById("generate-shorten-btn").addEventListener("click", function() {
+                let generatedUrl = document.getElementById("generated-url")
+                    .value; // decrypt the hidden full URL
 
-        document.getElementById("generate-shorten-btn").addEventListener("click", function() {
-            let baseDomain = document.getElementById("app-url").value; // Get APP_URL from hidden input
-            let uniqueReference = Math.random().toString(36).substr(2, 8); // Generate a unique reference
-            let shortenedUrl = baseDomain + "/short/" + uniqueReference; // Format shortened URL
-            document.getElementById("shorten-url").value = shortenedUrl;
+                try {
+                    let urlObj = new URL(generatedUrl); // parse the URL safely
+                    let mainDomain = urlObj.origin; // e.g., "https://alkathirimotors.com.sa"
+
+                    let uniqueReference = Math.random().toString(36).substr(2, 8);
+                    let shortenedUrl = mainDomain + "/short/" + uniqueReference;
+
+                    document.getElementById("shorten-url").value = shortenedUrl;
+                } catch (error) {
+                    console.error("Invalid URL format");
+                    document.getElementById("shorten-url").value = "";
+                }
+            });
+
+
+            generateUTMUrl(); // Initial generation
         });
     </script>
 @endpush

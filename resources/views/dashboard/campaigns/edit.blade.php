@@ -42,7 +42,7 @@
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="website_url_inp" name="website_url"
                                     value="{{ $campaign->website_url ?? (env('APP_URL') ?? 'https://alkathirimotors.com.sa') }}"
-                                    placeholder="https://example.com" readonly />
+                                    placeholder="https://example.com" />
                                 <label for="website_url_inp">{{ __('Enter the Website URL') }}</label>
                             </div>
                         </div>
@@ -97,19 +97,26 @@
                     <div class="col-md-12 fv-row">
                         <label class="fs-5 fw-bold mb-2">{{ __('Generated Link') }}</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" name="website_url_new" id="generated-url"
+                            {{-- <input type="text" class="form-control" name="website_url_new" id="generated-url"
+                                value="{{ $campaign->generated_url ?? '' }}" placeholder="{{ __('generate URL') }}"
+                                readonly /> --}}
+
+                            <input type="hidden" class="form-control" name="website_url_new" id="generated-url"
                                 value="{{ $campaign->generated_url ?? '' }}" placeholder="{{ __('generate URL') }}"
                                 readonly />
-                            <button type="button" class="btn btn-outline-secondary bordered-2" id="copy-btn"
-                                title="Copy" style="border: 1px solid rgb(193, 193, 193)">
-                                <i class="fas fa-copy"></i>
-                            </button>
+
+                            <input type="text" class="form-control" id="generated-fake-url"
+                                value="{{ $campaign->generated_url ?? '' }}" placeholder="{{ __('generate URL') }}"
+                                readonly />
+
+
                         </div>
                     </div>
                 </div>
             </div>
 
             <input type="hidden" id="app-url" value="{{ env('APP_URL') ?? 'https://alkathirimotors.com.sa' }}">
+
 
             <div class="inputs-wrapper">
                 <!-- Shorten Link -->
@@ -120,10 +127,14 @@
                             value="{{ $campaign->shorten_link ?? '' }}" placeholder="{{ __('generate a shortened URL') }}"
                             readonly />
                     </div>
-                    <div class="col-md-4 fv-row">
-                        <input class="btn btn-primary" type="button" id="generate-shorten-btn"
+                    <div class="col-md-4 fv-row d-flex">
+                        <input class="btn btn-primary me-2" type="button" id="generate-shorten-btn"
                             value="{{ __('Create shorten url') }}">
+                        <button type="button" class="btn btn-outline-secondary" id="copy-btn" title="Copy">
+                            <i class="fas fa-copy"></i>
+                        </button>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -156,7 +167,15 @@
                 if (utmCampaign) params.set("utm_campaign", utmCampaign);
 
                 let paramString = params.toString();
-                let generatedUrl = baseUrl ? baseUrl + (paramString ? `?${paramString}` : "") : "";
+
+                let generatedUrl = baseUrl;
+                if (paramString) {
+                    // if URL already has a "?", append using "&"
+                    generatedUrl += (baseUrl.includes('?') ? '&' : '?') + paramString;
+                }
+
+                let encodedUrl = btoa(generatedUrl);
+                document.getElementById("generated-fake-url").value = encodedUrl;
 
                 document.getElementById("generated-url").value = generatedUrl;
             }
@@ -167,18 +186,42 @@
                 input.addEventListener("input", generateUTMUrl);
             });
 
+            // Copy button logic (for shortened URL)
             document.getElementById("copy-btn").addEventListener("click", function() {
-                let generatedUrlInput = document.getElementById("generated-url");
-                navigator.clipboard.writeText(generatedUrlInput.value);
+                let shortenUrlInput = document.getElementById("shorten-url");
+                if (shortenUrlInput.value) {
+                    navigator.clipboard.writeText(shortenUrlInput.value).then(() => {
+                        let copyBtn = document.getElementById("copy-btn");
+                        let originalHTML = copyBtn.innerHTML;
+
+                        copyBtn.innerHTML = '<i class="fas fa-check"></i>';
+                        setTimeout(() => {
+                            copyBtn.innerHTML = originalHTML;
+                        }, 1000);
+                    });
+                }
+            });
+
+            // Generate shorten link
+            document.getElementById("generate-shorten-btn").addEventListener("click", function() {
+                let generatedUrl = document.getElementById("generated-url")
+                    .value; // decrypt the hidden full URL
+
+                try {
+                    let urlObj = new URL(generatedUrl); // parse the URL safely
+                    let mainDomain = urlObj.origin; // e.g., "https://alkathirimotors.com.sa"
+
+                    let uniqueReference = Math.random().toString(36).substr(2, 8);
+                    let shortenedUrl = mainDomain + "/short/" + uniqueReference;
+
+                    document.getElementById("shorten-url").value = shortenedUrl;
+                } catch (error) {
+                    console.error("Invalid URL format");
+                    document.getElementById("shorten-url").value = "";
+                }
             });
 
             generateUTMUrl();
-        });
-
-        document.getElementById("generate-shorten-btn").addEventListener("click", function() {
-            let shortenedUrl = "{{ env('APP_URL') ?? 'https://alkathirimotors.com.sa' }}/short/" + Math.random()
-                .toString(36).substr(2, 8);
-            document.getElementById("shorten-url").value = shortenedUrl;
         });
     </script>
 @endpush
