@@ -59,24 +59,7 @@
                 </div>
                 <!-- end   :: General Search -->
 
-                <!-- begin :: Toolbar -->
-                <div class="d-flex justify-content-end" data-kt-docs-table-toolbar="base">
 
-                    <!-- begin :: Add Button -->
-                    <a href="{{ route('dashboard.campaigns.create') }}" class="btn btn-primary" data-bs-toggle="tooltip"
-                        title="">
-
-                        <span class="svg-icon svg-icon-2">
-                            <i class="fa fa-plus fa-lg"></i>
-                        </span>
-
-                        {{ __('Add new campaign') }}
-
-                    </a>
-                    <!-- end   :: Add Button -->
-
-                </div>
-                <!-- end   :: Toolbar -->
 
 
 
@@ -92,10 +75,8 @@
                         <th>{{ __('Campaign Source') }}</th>
                         <th>{{ __('Campaign Medium') }}</th>
                         <th>{{ __('Campaign Name') }}</th>
-                        <th>{{ __('Shorten Link') }}</th>
                         <th>{{ __('created date') }}</th>
-                        <th class="min-w-100px">{{ __('actions') }}</th>
-                    </tr>
+                     </tr>
                 </thead>
 
                 <tbody class="text-gray-600 fw-bold text-center">
