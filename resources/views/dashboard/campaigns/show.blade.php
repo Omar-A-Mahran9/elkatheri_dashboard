@@ -112,5 +112,5 @@
 @endsection
 @push('scripts')
     <script src="{{ asset('js/dashboard/datatables/datatables.bundle.js') }}"></script>
-    <script src="{{ asset('js/dashboard/datatables/campaigns.js') }}"></script>
+    <script src="{{ asset('js/dashboard/datatables/campaignsresults.js') }}"></script>
 @endpush

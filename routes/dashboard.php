@@ -32,6 +32,7 @@ Route::group([ 'prefix' => 'dashboard' , 'namespace' => 'Dashboard', 'as' => 'da
     Route::resource('banks','BankController');
     Route::resource('services','ServiceController');
     Route::resource('campaigns','CampaignsController');
+    Route::resource('campaignsresults','CampaignsResultController');
 
     Route::resource('branches','BranchController');
     Route::resource('cities','CityController');
