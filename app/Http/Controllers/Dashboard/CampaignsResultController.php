@@ -12,7 +12,7 @@ class CampaignsResultController extends Controller
     {
          $count_campaign = CampaignVisit::count(); // Get the count of blogs
          $this->authorize('view_campaign');
-
+dd($request['campaign_id']);
         if ($request->ajax())
         {
             $data = getModelData( model: new CampaignVisit(), andsFilters: [ [ 'campaign_id' , '=' , $request['campaign_id'] ] ],relations:['campaign' => [ 'id' , 'campaign_name' ] ] );
