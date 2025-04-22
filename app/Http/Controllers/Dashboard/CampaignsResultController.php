@@ -19,6 +19,6 @@ class CampaignsResultController extends Controller
             return response()->json($data);
         }
 
-        return view('dashboard.campaigns.show' ,compact('count_campaign'));
+        return view('dashboard.campaigns.show', compact('count_campaign', 'id'));
     }
 }
