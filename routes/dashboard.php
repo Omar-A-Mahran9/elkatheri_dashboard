@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\CampaignController;
+use App\Http\Controllers\Dashboard\CampaignsResultController;
 use Illuminate\Support\Facades\Route;
 
 Route::group([ 'prefix' => 'dashboard' , 'namespace' => 'Dashboard', 'as' => 'dashboard.' , 'middleware' => ['web', 'auth:employee', 'set_locale'] ] , function (){
@@ -34,7 +35,7 @@ Route::group([ 'prefix' => 'dashboard' , 'namespace' => 'Dashboard', 'as' => 'da
     Route::resource('services','ServiceController');
     Route::resource('campaigns','CampaignsController');
     // Route::resource('campaignsresults','CampaignsResultController');
-    Route::get('/campaignsresults/{id}', [CampaignController::class, 'show']);
+    Route::get('/campaignsresults/{id}', [CampaignsResultController::class, 'show']);
 
     Route::resource('branches','BranchController');
     Route::resource('cities','CityController');
