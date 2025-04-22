@@ -41,9 +41,9 @@
         <!--begin::Col-->
         <div class="col-md-12 col-xl-6 ">
             <!--begin::Card-->
-            <div class="card border-hover-primary h-100">
+            <div class="card border-hover-primary ">
                 <!--begin::Card header-->
-                <div class="card-header border-0 pt-9">
+                <div class="card-header border-0  ">
                     <!--begin::Card Title-->
                     <div class="card-title m-0">
                         <!--begin::Avatar-->
