@@ -7,13 +7,13 @@ let KTDatatable = (function () {
     let datatable;
 
     // Private functions
-    let initDatatable = function () {
+    let initDatatable = function (campaign_id) {
         datatable = $("#kt_datatable").DataTable({
             orderable: false,
             searchDelay: 500,
             processing: true,
             serverSide: true,
-            order: [], // display records number and ordering type
+            order: [],
             stateSave: false,
             select: {
                 style: "os",
@@ -23,8 +23,7 @@ let KTDatatable = (function () {
             ajax: {
                 url: `/dashboard/campaignsresults/${campaign_id}`,
                 data: function (d) {
-                    let datatable = $("#kt_datatable");
-                    let info = datatable.DataTable().page.info();
+                    let info = $("#kt_datatable").DataTable().page.info();
                     d.page = info.page + 1;
                     d.per_page = info.length;
                 },
@@ -49,8 +48,8 @@ let KTDatatable = (function () {
 
     // Public methods
     return {
-        init: function () {
-            initDatatable();
+        init: function (campaign_id) {
+            initDatatable(campaign_id);
             handleSearchDatatable();
             // handleFilterDatatable();
         },
