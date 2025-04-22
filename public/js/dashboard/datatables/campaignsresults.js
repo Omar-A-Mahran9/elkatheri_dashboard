@@ -7,13 +7,13 @@ let KTDatatable = (function () {
     let datatable;
 
     // Private functions
-    let initDatatable = function (campaign_id) {
+    let initDatatable = function () {
         datatable = $("#kt_datatable").DataTable({
             orderable: false,
             searchDelay: 500,
             processing: true,
             serverSide: true,
-            order: [],
+            order: [], // display records number and ordering type
             stateSave: false,
             select: {
                 style: "os",
@@ -21,14 +21,20 @@ let KTDatatable = (function () {
                 className: "row-selected",
             },
             ajax: {
-                url: `/dashboard/campaignsresults/${campaign_id}`,
-                data: function (d) {
-                    let info = $("#kt_datatable").DataTable().page.info();
-                    d.page = info.page + 1;
-                    d.per_page = info.length;
+                data: function () {
+                    let datatable = $("#kt_datatable");
+                    let campaign_id = $("#kt_datatable").data("campaign-id"); // Assuming you set campaign_id dynamically in the HTML
+
+                    let info = datatable.DataTable().page.info();
+                    datatable
+                        .DataTable()
+                        .ajax.url(
+                            `/dashboard/campaignsresults/${campaign_id}?page=${
+                                info.page + 1
+                            }&per_page=${info.length}`
+                        );
                 },
             },
-
             columns: [
                 { data: "id" },
                 { data: "campaign.campaign_name" },
@@ -48,8 +54,8 @@ let KTDatatable = (function () {
 
     // Public methods
     return {
-        init: function (campaign_id) {
-            initDatatable(campaign_id);
+        init: function () {
+            initDatatable();
             handleSearchDatatable();
             // handleFilterDatatable();
         },
