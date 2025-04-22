@@ -13,8 +13,7 @@ class CampaignsResultController extends Controller
 {
     public function index(Request $request)
     {
-        dd($request);
-        $count_cities = CampaignVisit::count(); // Get the count of blogs
+         $count_campaign = CampaignVisit::count(); // Get the count of blogs
 
         $this->authorize('view_campaign');
 
@@ -25,6 +24,6 @@ class CampaignsResultController extends Controller
             return response()->json($data);
         }
 
-        return view('dashboard.campaigns.show');
+        return view('dashboard.campaigns.show' ,compact('count_campaign'));
     }
 }

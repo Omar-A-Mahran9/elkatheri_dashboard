@@ -84,7 +84,7 @@
                         <!--begin::Due-->
                         <div class=" rounded min-w-125px py-1 px-4 me-7">
                             <div class="fs-2 fw-bold">{{ __('cities count') }}</div>
-                            <div class="fs-4  ">{{ $count_cities }}</div>
+                            <div class="fs-4  ">{{ $count_campaign }}</div>
                         </div>
                         <!--end::Due-->
 
@@ -143,32 +143,7 @@
                 <div class="card-body p-9">
                     <!--begin::Name-->
 
-                    <div class="d-flex justify-content-center flex-wrap mb-5 mt-5">
-
-                        <!--begin::Toolbar-->
-                        <div class="d-flex justify-content-end w-100" id="add_btn" data-bs-toggle="modal"
-                            data-bs-target="#crud_modal" data-kt-docs-table-toolbar="base">
-                            <!--begin::Add customer-->
-                            <button type="button" class="btn btn-primary w-100" data-bs-toggle="tooltip"
-                                data-bs-original-title="Coming Soon" data-kt-initialized="1">
-                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
-                                <span class="svg-icon svg-icon-2">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2"
-                                            rx="1" transform="rotate(-90 11.364 20.364)" fill="currentColor">
-                                        </rect>
-                                        <rect x="4.36396" y="11.364" width="16" height="2" rx="1"
-                                            fill="currentColor"></rect>
-                                    </svg>
-                                </span>
-                                <!--end::Svg Icon-->{{ __('Add city') }}
-                            </button>
-                            <!--end::Add customer-->
-                        </div>
-                        <!--end::Toolbar-->
-                    </div>
-                    <!--end::Info-->
+           
 
 
 
