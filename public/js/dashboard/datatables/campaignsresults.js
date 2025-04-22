@@ -21,18 +21,15 @@ let KTDatatable = (function () {
                 className: "row-selected",
             },
             ajax: {
-                data: function () {
+                url: `/dashboard/campaignsresults/${campaign_id}`,
+                data: function (d) {
                     let datatable = $("#kt_datatable");
                     let info = datatable.DataTable().page.info();
-                    datatable
-                        .DataTable()
-                        .ajax.url(
-                            `/dashboard/campaignsresults/${campaign_id}?page=${
-                                info.page + 1
-                            }&per_page=${info.length}`
-                        );
+                    d.page = info.page + 1;
+                    d.per_page = info.length;
                 },
             },
+
             columns: [
                 { data: "id" },
                 { data: "campaign.campaign_name" },
