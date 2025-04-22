@@ -110,6 +110,8 @@ let translations = {
         "No results found": "لا يوجد نتائج للعرض",
         "test drive": "التجربة",
         Auto: "اوتوماتيك",
+        results: "النتائج",
+
         hatchback: "هاتشباك",
         sedan: "سيدان",
         "4x4": "دفع رباعي",
