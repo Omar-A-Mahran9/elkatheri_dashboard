@@ -5,7 +5,6 @@ let KTDatatable = (function () {
     // Shared variables
     let table;
     let datatable;
-    let filter;
 
     // Private functions
     let initDatatable = function () {
@@ -40,8 +39,7 @@ let KTDatatable = (function () {
                 { data: "ip_address" },
                 { data: "user_agent" },
                 { data: "created_at" },
-                { data: null },
-            ],
+             ],
             columnDefs: [],
         });
 
