@@ -3,11 +3,8 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Models\Campaign;
-use App\Models\CampaignResult;
-use App\Models\CampaignVisit;
-use App\Models\Service;
-use Illuminate\Http\Request;
+  use App\Models\CampaignVisit;
+ use Illuminate\Http\Request;
 
 class CampaignsResultController extends Controller
 {
