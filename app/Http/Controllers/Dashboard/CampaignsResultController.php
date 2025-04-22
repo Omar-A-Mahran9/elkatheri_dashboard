@@ -13,6 +13,9 @@ class CampaignsResultController extends Controller
 {
     public function index(Request $request)
     {
+        dd($request);
+        $count_cities = CampaignVisit::count(); // Get the count of blogs
+
         $this->authorize('view_campaign');
 
         if ($request->ajax())
