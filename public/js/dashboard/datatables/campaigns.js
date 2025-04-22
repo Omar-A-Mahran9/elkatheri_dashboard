@@ -25,17 +25,14 @@ let KTDatatable = (function () {
                 data: function () {
                     let datatable = $("#kt_datatable");
                     let info = datatable.DataTable().page.info();
-                    let campaign_id = $("#kt_datatable").data("campaign-id");
-                    console.log(campaign_id); // Check if this prints the correct campaign_id
 
-                    // Check if the constructed URL is correct
-                    let url = `/dashboard/campaignsresults/${campaign_id}?page=${
-                        info.page + 1
-                    }&per_page=${info.length}`;
-                    console.log(url); // Check if the URL includes the campaign_id
-
-                    // Update the AJAX URL with campaign_id
-                    datatable.DataTable().ajax.url(url);
+                    datatable
+                        .DataTable()
+                        .ajax.url(
+                            `/dashboard/campaigns?page=${
+                                info.page + 1
+                            }&per_page=${info.length}`
+                        );
                 },
             },
             columns: [
