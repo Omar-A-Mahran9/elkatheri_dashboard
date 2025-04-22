@@ -10,12 +10,11 @@ class CampaignsResultController extends Controller
 {
     public function show(Request $request, $id)
     {
-          $count_campaign = CampaignVisit::where('campaign_id',$request->campaign_id)->count(); // Get the count of blogs
-        dd( $count_campaign,$request);
-          $this->authorize('view_campaign');
+          $count_campaign = CampaignVisit::where('campaign_id',$id)->count(); // Get the count of blogs
+           $this->authorize('view_campaign');
          if ($request->ajax())
         {
-            $data = getModelData( model: new CampaignVisit(), andsFilters: [ ['campaign_id', '=', $request->get('campaign_id')] ],relations:['campaign' => [ 'id' , 'campaign_name' ] ] );
+            $data = getModelData( model: new CampaignVisit(), andsFilters: [ ['campaign_id', '=', $id] ],relations:['campaign' => [ 'id' , 'campaign_name' ] ] );
 
             return response()->json($data);
         }
