@@ -143,7 +143,7 @@
                 <div class="card-body p-9">
                     <!--begin::Name-->
 
-           
+
 
 
 
@@ -184,7 +184,7 @@
             <!-- end   :: Filter -->
 
             <!-- begin :: Datatable -->
-            <table id="kt_datatable" class="table text-center table-row-dashed fs-6 gy-5">
+            <table id="kt_datatable" data-campaign-id="{{ $campaign_id }}" class="table text-center table-row-dashed fs-6 gy-5">
 
                 <thead>
                     <tr class="text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
