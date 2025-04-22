@@ -3,6 +3,9 @@
     "The password is incorrect": "كلمة المرور خاطئة",
     "You have to log in": "يجب عليك تسجيل الدخول أولا",
     "Cars": "السيارات",
+    "IP Address": "عنوان الجهاز",
+    "User Agent": "وكيل المستخدم",
+
     "Brands": "العلامات التجارية",
     "Brands list": "قائمة العلامات التجارية",
     "Models": "الموديلات",

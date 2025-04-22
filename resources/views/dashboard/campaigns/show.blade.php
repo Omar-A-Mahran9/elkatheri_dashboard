@@ -72,9 +72,9 @@
                 <thead>
                     <tr class="text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
                         <th>#</th>
-                        <th>{{ __('Campaign Source') }}</th>
-                        <th>{{ __('Campaign Medium') }}</th>
                         <th>{{ __('Campaign Name') }}</th>
+                        <th>{{ __('IP Address') }}</th>
+                        <th>{{ __('User Agent') }}</th>
                         <th>{{ __('created date') }}</th>
                      </tr>
                 </thead>

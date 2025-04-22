@@ -35,11 +35,11 @@ let KTDatatable = (function () {
             },
             columns: [
                 { data: "id" },
-                { data: "campaign_id" },
+                { data: "campaign.campaign_name" },
                 { data: "ip_address" },
                 { data: "user_agent" },
                 { data: "created_at" },
-             ],
+            ],
             columnDefs: [],
         });
 
