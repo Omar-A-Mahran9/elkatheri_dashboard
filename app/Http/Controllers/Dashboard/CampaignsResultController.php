@@ -14,7 +14,7 @@ class CampaignsResultController extends Controller
          $this->authorize('view_campaign');
          if ($request->ajax())
         {
-            $data = getModelData( model: new CampaignVisit(), andsFilters: [ [ 'campaign_id' , '=' , $request['campaign_id'] ] ],relations:['campaign' => [ 'id' , 'campaign_name' ] ] );
+            $data = getModelData( model: new CampaignVisit(), andsFilters: [ ['campaign_id', '=', $request->get('campaign_id')] ],relations:['campaign' => [ 'id' , 'campaign_name' ] ] );
 
             return response()->json($data);
         }
