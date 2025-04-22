@@ -83,8 +83,8 @@
                     <div class="d-flex  justify-content-between flex-wrap ">
                         <!--begin::Due-->
                         <div class=" rounded min-w-125px py-1 px-4 me-7">
-                            <div class="fs-2 fw-bold">{{ __('Visiting Count') }}</div>
-                            <div class="fs-4  ">{{ $count_campaign }}</div>
+                            {{-- <div class="fs-2 fw-bold">{{ __('Visiting Count') }}</div> --}}
+                            <div class="fs-10 text-center ">{{ $count_campaign }}</div>
                         </div>
                         <!--end::Due-->
 
