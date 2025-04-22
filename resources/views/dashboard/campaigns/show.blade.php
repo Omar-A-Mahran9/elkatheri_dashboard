@@ -77,25 +77,16 @@
                 </div>
                 <!--end:: Card header-->
                 <!--begin:: Card body-->
-                <div class="card-body ">
+                <div class="card-body">
                     <!--begin::Name-->
-
-                    <div class="d-flex  justify-content-between flex-wrap ">
-                        <!--begin::Due-->
-                        <div class=" rounded min-w-125px py-1 px-4 me-7">
-                            {{-- <div class="fs-2 fw-bold">{{ __('Visiting Count') }}</div> --}}
-                            <div class="fs-10 text-center ">{{ $count_campaign }}</div>
+                    <div class="d-flex justify-content-center align-items-center" style="height: 100px;">
+                        <div class="rounded min-w-125px py-3 px-4 bg-light">
+                            <div class="fs-2 fw-bold text-center">{{ $count_campaign }}</div>
                         </div>
-                        <!--end::Due-->
-
-
                     </div>
-                    <!--end::Info-->
-
-
-
+                    <!--end::Name-->
                 </div>
-                <!--end:: Card body-->
+
             </div>
             <!--end::Card-->
         </div>
