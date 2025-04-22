@@ -64,7 +64,7 @@
                                     stroke="#1C1D22" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                             </svg>
                         </div>
-                        <h4 class="fw-bold me-auto px-4 py-3">{{ __('cities') }}</h4>
+                        <h4 class="fw-bold me-auto px-4 py-3">{{ __('Visiting Count') }}</h4>
 
                         <!--end::Avatar-->
                     </div>
@@ -77,7 +77,7 @@
                 </div>
                 <!--end:: Card header-->
                 <!--begin:: Card body-->
-                <div class="card-body p-9">
+                <div class="card-body ">
                     <!--begin::Name-->
 
                     <div class="d-flex  justify-content-between flex-wrap ">
