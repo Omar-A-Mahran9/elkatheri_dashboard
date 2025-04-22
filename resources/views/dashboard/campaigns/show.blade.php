@@ -39,7 +39,7 @@
     <!-- end   :: Subheader -->
     <div class="row g-6 g-xl-9 mb-10 ">
         <!--begin::Col-->
-        <div class="col-md-6 col-xl-6 ">
+        <div class="col-md-12 col-xl-6 ">
             <!--begin::Card-->
             <div class="card border-hover-primary h-100">
                 <!--begin::Card header-->
@@ -83,7 +83,7 @@
                     <div class="d-flex  justify-content-between flex-wrap ">
                         <!--begin::Due-->
                         <div class=" rounded min-w-125px py-1 px-4 me-7">
-                            <div class="fs-2 fw-bold">{{ __('cities count') }}</div>
+                            <div class="fs-2 fw-bold">{{ __('Visiting Count') }}</div>
                             <div class="fs-4  ">{{ $count_campaign }}</div>
                         </div>
                         <!--end::Due-->
@@ -99,60 +99,7 @@
             </div>
             <!--end::Card-->
         </div>
-        <!--end::Col-->
-        <!--begin::Col-->
-        <!--begin::Col-->
-        <div class="col-md-6 col-xl-6">
-            <!--begin::Card-->
-            <div class="card border-hover-primary h-100">
-                <!--begin::Card header-->
-                <div class="card-header border-0 pt-9">
-                    <!--begin::Card Title-->
-                    <div class="card-title m-0">
-                        <!--begin::Avatar-->
-                        <div class=" w-35px h-35px bg-light m-auto d-flex justify-content-center align-items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="27" height="27" viewBox="0 0 18 18"
-                                fill="none">
-                                <path fill-rule="evenodd" clip-rule="evenodd"
-                                    d="M11.0073 11.6724C7.93315 11.6724 5.30565 12.1382 5.30565 13.999C5.30565 15.8599 7.91565 16.339 11.0073 16.339C14.0823 16.339 16.709 15.8774 16.709 14.0157C16.709 12.154 14.0998 11.6724 11.0073 11.6724Z"
-                                    stroke="#1C1D22" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                <path fill-rule="evenodd" clip-rule="evenodd"
-                                    d="M11.0071 9.01652C13.0254 9.01652 14.6621 7.38069 14.6621 5.36236C14.6621 3.34402 13.0254 1.70819 11.0071 1.70819C8.98961 1.70819 7.35294 3.34402 7.35294 5.36236C7.34544 7.37319 8.97044 9.00902 10.9813 9.01652H11.0071Z"
-                                    stroke="#1C1D22" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                <path
-                                    d="M5.26367 8.06802C3.92951 7.88052 2.90201 6.73552 2.89951 5.34969C2.89951 3.98385 3.89534 2.85052 5.20117 2.63635"
-                                    stroke="#1C1D22" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                <path
-                                    d="M3.50391 11.2769C2.21141 11.4694 1.30891 11.9227 1.30891 12.856C1.30891 13.4985 1.73391 13.9152 2.42057 14.176"
-                                    stroke="#1C1D22" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                            </svg>
-                        </div>
-                        <h4 class="fw-bold me-auto px-4 py-3">{{ __('cities') }}</h4>
 
-                        <!--end::Avatar-->
-                    </div>
-                    <!--end::Car Title-->
-                    <!--begin::Card toolbar-->
-                    {{-- <div class="card-toolbar">
-                <span class="badge badge-light-primary fw-bold me-auto px-4 py-3">In Progress</span>
-            </div> --}}
-                    <!--end::Card toolbar-->
-                </div>
-                <!--end:: Card header-->
-                <!--begin:: Card body-->
-                <div class="card-body p-9">
-                    <!--begin::Name-->
-
-
-
-
-
-                </div>
-                <!--end:: Card body-->
-            </div>
-            <!--end::Card-->
-        </div>
-        <!--end::Col-->
 
     </div>
     <!-- begin :: Datatable card -->
