@@ -17,7 +17,7 @@ class CampaignsResultController extends Controller
 
         if ($request->ajax())
         {
-            $data = getModelData( model: new CampaignVisit() );
+            $data = getModelData( model: new CampaignVisit(),relations:['campaign' => [ 'id' , 'campaign_name' ] ] );
 
             return response()->json($data);
         }
