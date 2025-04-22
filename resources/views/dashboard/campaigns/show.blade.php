@@ -79,7 +79,7 @@
                 <!--begin:: Card body-->
                 <div class="card-body">
                     <!--begin::Name-->
-                    <div class="d-flex justify-content-center align-items-center" style="height: 120px;">
+                    <div class="d-flex justify-content-center align-items-center">
                         <div class="rounded min-w-125px px-4">
                             <div class="fw-bold text-center" style="font-size: 3rem;">{{ $count_campaign }}</div>
                         </div>
