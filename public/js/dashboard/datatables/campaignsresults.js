@@ -27,7 +27,7 @@ let KTDatatable = (function () {
                     datatable
                         .DataTable()
                         .ajax.url(
-                            `/dashboard/campaignsresults?page=${
+                            `/dashboard/campaignsresults/${campaign_id}?page=${
                                 info.page + 1
                             }&per_page=${info.length}`
                         );
