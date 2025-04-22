@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\CampaignController;
 use Illuminate\Support\Facades\Route;
 
 Route::group([ 'prefix' => 'dashboard' , 'namespace' => 'Dashboard', 'as' => 'dashboard.' , 'middleware' => ['web', 'auth:employee', 'set_locale'] ] , function (){
