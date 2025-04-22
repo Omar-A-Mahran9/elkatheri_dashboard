@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 
 class CampaignsResultController extends Controller
 {
-    public function show(Request $request)
+    public function index(Request $request)
     {
          $count_campaign = CampaignVisit::count(); // Get the count of blogs
          $this->authorize('view_campaign');
