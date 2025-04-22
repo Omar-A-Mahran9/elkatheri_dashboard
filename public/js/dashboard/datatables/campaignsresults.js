@@ -58,8 +58,7 @@ let KTDatatable = (function () {
     return {
         init: function () {
             initDatatable();
-            handleSearchDatatable();
-            // handleFilterDatatable();
+             // handleFilterDatatable();
         },
     };
 })();
