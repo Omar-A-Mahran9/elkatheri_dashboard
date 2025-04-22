@@ -71,7 +71,7 @@ let KTDatatable = (function () {
                                 <!--end::Menu item-->
        <!--begin::Menu item-->
                                 <div class="menu-item px-3">
-                                    <a href="/dashboard/campaigns/${
+                                    <a href="/dashboard/campaignsresults/${
                                         row.id
                                     }" class="menu-link px-3 d-flex justify-content-between" >
                                        <span> ${translate("results")} </span>
