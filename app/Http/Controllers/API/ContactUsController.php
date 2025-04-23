@@ -47,7 +47,7 @@ class ContactUsController extends Controller
               'utm_medium' => $utmMedium,
               'utm_campaign' => $utmCampaign,
             ]);
- 
+
       }
       $this->sendOrderToZoho($contactUsRequest);
 
@@ -116,18 +116,18 @@ class ContactUsController extends Controller
                     "First_Name" => $order->name?? " ",  // Customer's first name
                     "Email" => $order->email ??  'noemail@example.com', // Customer's email
                     "Phone" => $order->phone ?? " ",    // Customer's phone number
-                    // "Lead_Source" => 'website',  // Source of the lead
-                    // "Lead_Status" => 'New',      // Status of the lead (New by default)
-                    // "Industry" => 'agency',     // Industry type (hardcoded as 'agency' for now)
-                    // "Website" => 'https://alkathirimotors.com.sa/', // Website URL
-                    // "Description" => $description ?? 'No description',  // Description of the lead
-                    // "Lead_Type" => 'Warm',  // Lead type (Hot, Warm, Cold)
-                    // "Created_Time" => $order->created_at->toIso8601String() ?? now()->toIso8601String(), // Lead creation time
-                    // "Modified_Time" => $order->updated_at->toIso8601String() ?? now()->toIso8601String(), // Lead modified time
+                    "Lead_Source" => 'website',  // Source of the lead
+                    "Lead_Status" => 'New',      // Status of the lead (New by default)
+                    "Industry" => 'agency',     // Industry type (hardcoded as 'agency' for now)
+                    "Website" => 'https://alkathirimotors.com.sa/', // Website URL
+                    "Description" => $description ?? 'No description',  // Description of the lead
+                    "Lead_Type" => 'Warm',  // Lead type (Hot, Warm, Cold)
+                    "Created_Time" => $order->created_at->toIso8601String() ?? now()->toIso8601String(), // Lead creation time
+                    "Modified_Time" => $order->updated_at->toIso8601String() ?? now()->toIso8601String(), // Lead modified time
                     // // Include UTM parameters in the Zoho request payload
-                    //   "UTM_Source" => $tracking->utm_source ?? 'N/A',
-                    // "UTM_Medium" => $tracking->utm_medium ?? 'N/A',
-                    // "UTM_Campaign" => $tracking->utm_campaign ?? 'N/A',
+                      "UTM_Source" => $tracking->utm_source ?? 'N/A',
+                    "UTM_Medium" => $tracking->utm_medium ?? 'N/A',
+                    "UTM_Campaign" => $tracking->utm_campaign ?? 'N/A',
                  ]
             ]
         ];
