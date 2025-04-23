@@ -16,7 +16,7 @@ class ContactUs extends Model
 
     public function tracking()
 {
-    return $this->hasOne(OrderTracking::class,'order_id');
+    return $this->hasOne(OrderTracking::class,'contact_id');
 }
 
 }
