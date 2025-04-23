@@ -418,6 +418,7 @@ class OrderController extends Controller
                                         'Closing_Date' => now()->addDays(14)->toDateString(),  // تاريخ الإغلاق المتوقع
                                         'Lead_Source' =>    $tracking->utm_source ?? 'website',
                                         'Description' => $description,
+                                        "Purchase_style"=>$order->payment_type
                                     ]
                                 ]
                             ];
