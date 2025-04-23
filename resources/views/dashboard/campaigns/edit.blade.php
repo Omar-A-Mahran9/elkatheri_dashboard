@@ -95,7 +95,7 @@
                 <!-- Generated Link -->
                 <div class="row mb-10">
                     <div class="col-md-12 fv-row">
-                        <label class="fs-5 fw-bold mb-2">{{ __('Generated Link') }}</label>
+                        {{-- <label class="fs-5 fw-bold mb-2">{{ __('Generated Link') }}</label> --}}
                         <div class="input-group">
                             {{-- <input type="text" class="form-control" name="website_url_new" id="generated-url"
                                 value="{{ $campaign->generated_url ?? '' }}" placeholder="{{ __('generate URL') }}"
@@ -105,7 +105,7 @@
                                 value="{{ $campaign->generated_url ?? '' }}" placeholder="{{ __('generate URL') }}"
                                 readonly />
 
-                            <input type="text" class="form-control" id="generated-fake-url"
+                            <input type="hidden" class="form-control" id="generated-fake-url"
                                 value="{{ $campaign->generated_url ?? '' }}" placeholder="{{ __('generate URL') }}"
                                 readonly />
 
