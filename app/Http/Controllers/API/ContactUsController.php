@@ -47,8 +47,7 @@ class ContactUsController extends Controller
               'utm_medium' => $utmMedium,
               'utm_campaign' => $utmCampaign,
             ]);
-            dd(  $track );
-
+ 
       }
       $this->sendOrderToZoho($contactUsRequest);
 
