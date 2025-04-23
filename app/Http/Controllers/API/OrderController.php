@@ -345,10 +345,8 @@ class OrderController extends Controller
             $description = "طلب سيارة رقم: " . $order->id . " واسمها: " . ($order->car->name ?? '') . " وموديل: " . ($order->car->year ?? '');
 
             // Retrieve UTM parameters from cookies
-            $utmSource = $request->cookie('utm_source');
-            $utmMedium = $request->cookie('utm_medium');
-            $utmCampaign = $request->cookie('utm_campaign');
-            $utmYear = $request->cookie('year');
+            $tracking = $order->tracking; // assuming `hasOne('App\Models\OrderTracking')`
+
 
             // Prepare the Zoho lead data
             $orderData = [
@@ -370,11 +368,10 @@ class OrderController extends Controller
                         "Created_Time" => $order->created_at->toIso8601String() ?? now()->toIso8601String(), // Lead creation time
                         "Modified_Time" => $order->updated_at->toIso8601String() ?? now()->toIso8601String(), // Lead modified time
                         // Include UTM parameters in the Zoho request payload
-                        "UTM_Source" => $utmSource ?? 'Unknown', // UTM Source
-                        "UTM_Medium" => $utmMedium ?? 'Unknown', // UTM Medium
-                        "UTM_Campaign" => $utmCampaign ?? 'Unknown', // UTM Campaign
-                        "UTM_Year" => $utmYear ?? 'Unknown', // UTM Year
-                    ]
+                     "UTM_Source" => $tracking->utm_source ?? 'N/A',
+                        "UTM_Medium" => $tracking->utm_medium ?? 'N/A',
+                        "UTM_Campaign" => $tracking->utm_campaign ?? 'N/A',
+                     ]
                 ]
             ];
 
