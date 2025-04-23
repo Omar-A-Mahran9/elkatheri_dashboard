@@ -86,6 +86,12 @@ class ContactUsController extends Controller
         if ($this->isTokenExpired($token)) {
             $this->refreshZohoAccessToken($token);
         }
+            // Split the full name into first and last name
+            $nameParts = explode(' ', $order->name, 2); // Split the name by the first space
+
+            // Default values in case of no space in the name
+            $firstName = $nameParts[0] ?? 'Unknown';
+            $lastName = $nameParts[1] ?? 'Unknown';
 
 
         // جلب تتبع الحملة المرتبط بالطلب
@@ -120,7 +126,8 @@ class ContactUsController extends Controller
         ];
 
         $data = [
-            "First_Name" => $order->name ?? 'Unknown',
+            "First_Name" => $firstName ?? " ",  // Customer's first name
+            "Last_Name" => $lastName ?? " ",    // Customer's last name
             "Email" => $order->email ?? 'noemail@example.com',
             "Phone" => $order->phone ?? 'Unknown',
             "Lead_Source" => 'website',
