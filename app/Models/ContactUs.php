@@ -14,5 +14,9 @@ class ContactUs extends Model
         'updated_at' => 'date:Y-m-d'
     ];
 
+    public function tracking()
+{
+    return $this->hasOne(OrderTracking::class,'order_id');
+}
 
 }
