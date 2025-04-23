@@ -40,14 +40,15 @@ class ContactUsController extends Controller
 
       // Check if at least one of the UTM cookies has a value and a valid campaign exists
       if (($utmSource || $utmMedium || $utmCampaign    ) && $campaign) {
-        dd($contactUsRequest->id,$utmSource,$utmMedium,$utmCampaign);
-        OrderTracking::create([
+        $track =OrderTracking::create([
               'contact_id' => $contactUsRequest->id,
               'campaign_id' => $campaign->id, // Use the campaign ID
               'utm_source' => $utmSource,
               'utm_medium' => $utmMedium,
               'utm_campaign' => $utmCampaign,
             ]);
+            dd(  $track );
+
       }
       $this->sendOrderToZoho($contactUsRequest);
 
