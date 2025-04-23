@@ -20,8 +20,7 @@ class CreateOrderTrackingsTable extends Migration
             $table->unsignedBigInteger('order_id')->nullable(); // FK to orders
             $table->unsignedBigInteger('appointment_id')->nullable();
 
-            $table->unsignedBigInteger('order_id')->nullable(); // FK to orders
-            $table->string('utm_source')->nullable();
+             $table->string('utm_source')->nullable();
             $table->string('utm_medium')->nullable();
             $table->string('utm_campaign')->nullable();
 
