@@ -58,9 +58,9 @@ class OrderController extends Controller
 
         $order = Order::create($data);
 
-        $utmSource = $request->utm_source;
-        $utmMedium = $request->utm_medium;
-        $utmCampaign = $request->utm_campaign;
+        $utmSource = $request->utm_source ??'N/a';
+        $utmMedium = $request->utm_medium??'N/a';
+        $utmCampaign = $request->utm_campaign??'N/a';
 
        // Retrieve cookies
         // $utmSource = $request->cookie('utm_source');
