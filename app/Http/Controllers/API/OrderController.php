@@ -410,17 +410,21 @@ class OrderController extends Controller
                    $dealData = [
                                 'data' => [
                                     [
-                                        'Deal_Name' => "طلب رقم {$order->id}",  // اسم العرض
+                                        'Deal_Name' =>  $order->name,  // اسم العرض
                                         'Deal_Owner' => $order->name,  // اسم العرض
                                         "Phone" => $order->phone ?? " ",    // Customer's phone number
                                         "Email" => $order->email ?? $order->organization_email ?? 'noemail@example.com', // Customer's email
                                         'Amount' => $order->price ?? 0,  // السعر (إن وجد)
                                         'Closing_Date' => now()->addDays(14)->toDateString(),  // تاريخ الإغلاق المتوقع
-                                        'Lead_Source' =>    $tracking->utm_source ?? 'website',
+                                        'Lead_Source' =>   'website',
                                         'Description' => $description,
-                                        "Purchase_style"=>$order->payment_type
+                                        "Purchase_style"=>$order->payment_type,
+                                        "UTM_Source" => $tracking->utm_source ?? 'N/A',
+                                        "UTM_Medium" => $tracking->utm_medium ?? 'N/A',
+                                        "UTM_Campaign" => $tracking->utm_campaign ?? 'N/A',
+                                     ]
                                     ]
-                                ]
+                                
                             ];
 
             $dealResponse = Http::withToken($token->access_token)
