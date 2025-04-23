@@ -271,9 +271,8 @@ class OrderController extends Controller
         $this->sendOrderToZoho($order);
 
         // Optionally you can trigger notifications or emails here
-        // $this->newOfferOrderNotification($order);
-        // $this->sendMail($order);
-       $this->sendOrderToZoho($order);
+        $this->newOfferOrderNotification($order);
+        $this->sendMail($order);
 
 
         return response()->json([
@@ -455,13 +454,7 @@ class OrderController extends Controller
             }
         }
 
-
-        /**
-         * Check if the Zoho access token is expired.
-         *
-         * @param  ZohoToken  $token
-         * @return bool
-         */
+ 
         private function isTokenExpired($token)
         {
             // Get the current time in Unix timestamp
