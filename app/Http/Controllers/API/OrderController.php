@@ -384,8 +384,8 @@ class OrderController extends Controller
                         "Lead_Source" => 'website',  // Source of the lead
                         "Lead_Status" => 'New',      // Status of the lead (New by default)
                         "Industry" => 'agency',     // Industry type (hardcoded as 'agency' for now)
-                        "Car Model" => $order->car->model->name?? 'N/A',    // Industry type (hardcoded as 'agency' for now)
-                        "Model Year" => $order->car->year?? 'N/A',    // Industry type (hardcoded as 'agency' for now)
+                        "Car_Model" => $order->car->model->name?? 'N/A',    // Industry type (hardcoded as 'agency' for now)
+                        "Model_Year" => $order->car->year?? 'N/A',    // Industry type (hardcoded as 'agency' for now)
 
                         "Website" => 'https://alkathirimotors.com.sa/', // Website URL
                         "City" => $order->city_name ?? 'Unknown City',  // City
@@ -405,6 +405,27 @@ class OrderController extends Controller
             $response = Http::withToken($token->access_token)
                             ->acceptJson()  // Ensure JSON response is accepted
                             ->post('https://www.zohoapis.com/crm/v2/Leads', $orderData);
+
+
+                   $dealData = [
+                                'data' => [
+                                    [
+                                        'Deal_Name' => "طلب رقم {$order->id}",  // اسم العرض
+                                        'Deal_Owner' => $order->name,  // اسم العرض
+                                        "Phone" => $order->phone ?? " ",    // Customer's phone number
+                                        "Email" => $order->email ?? $order->organization_email ?? 'noemail@example.com', // Customer's email
+                                        'Amount' => $order->price ?? 0,  // السعر (إن وجد)
+                                        'Closing_Date' => now()->addDays(14)->toDateString(),  // تاريخ الإغلاق المتوقع
+                                        'Lead_Source' =>    $tracking->utm_source ?? 'website',
+                                        'Description' => $description,
+                                    ]
+                                ]
+                            ];
+
+            $dealResponse = Http::withToken($token->access_token)
+                                                ->acceptJson()
+                                                ->post('https://www.zohoapis.com/crm/v2/Deals', $dealData);
+
 
             // Check if the response is successful
             if ($response->successful()) {
