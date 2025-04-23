@@ -92,7 +92,7 @@
             <!--end::Card-->
         </div>
 
-        <div class="col-md-12 col-xl-12 ">
+        <div class="col-md-12 col-xl-6 ">
             <!--begin::Card-->
             <div class="card border-hover-primary ">
                 <!--begin::Card header-->
