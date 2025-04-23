@@ -236,15 +236,14 @@ class AppointmentController extends Controller
                     "Email" => $order->email ?? $order->organization_email ?? 'noemail@example.com', // Customer's email
                     "Phone" => $formattedPhone ?? " ",    // Customer's phone number
                     "Mobile" => $formattedPhone ?? " ",   // Customer's mobile number
-                    "Company" => $order->organization_name ?? 'No Organization',  // Organization (if any)
                     "Lead_Source" => 'website',  // Source of the lead
                     "Lead_Status" => 'New',      // Status of the lead (New by default)
                     "Industry" => 'agency',     // Industry type (hardcoded as 'agency' for now)
-                    "Car_Model" => $order->car->model->name?? 'N/A',    // Industry type (hardcoded as 'agency' for now)
-                    "Model_Year" => $order->car->year?? 'N/A',    // Industry type (hardcoded as 'agency' for now)
+                    "Car_Model" => $order->model->name?? 'N/A',    // Industry type (hardcoded as 'agency' for now)
+                    "Model_Year" => $order->year?? 'N/A',    // Industry type (hardcoded as 'agency' for now)
 
                     "Website" => 'https://alkathirimotors.com.sa/', // Website URL
-                    "City" => $order->city_name ?? 'Unknown City',  // City
+                    "City" => $order->city->name ?? 'Unknown City',  // City
                     "Description" => $description ?? 'No description',  // Description of the lead
                     "Lead_Type" => 'Warm',  // Lead type (Hot, Warm, Cold)
                     "Created_Time" => $order->created_at->toIso8601String() ?? now()->toIso8601String(), // Lead creation time
