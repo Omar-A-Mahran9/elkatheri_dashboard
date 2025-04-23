@@ -76,4 +76,10 @@ class Order extends Model
         return $this->belongsToMany(Service::class);
     }
 
+    public function tracking()
+{
+    return $this->hasOne(OrderTracking::class);
+}
+
+
 }

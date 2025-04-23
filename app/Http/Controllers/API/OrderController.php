@@ -110,6 +110,14 @@ class OrderController extends Controller
         $data['phone'] = convertArabicNumbers($data['phone']);
          $data['terms_and_privacy'] = $data['terms_and_privacy'] ? 1 : 0;
 
+
+                // Read cookies
+            $data['utm_source'] = $request->cookie('utm_source');
+            $data['utm_medium'] = $request->cookie('utm_medium');
+            $data['utm_campaign'] = $request->cookie('utm_campaign');
+            $data['utm_year'] = $request->cookie('year');
+
+
         $order = Order::create($data);
         $this->newUnavailableCarNotification($order);
         $this->sendMail($order);
