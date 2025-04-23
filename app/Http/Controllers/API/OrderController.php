@@ -21,6 +21,7 @@ use App\Http\Requests\StoreCorporatesOrderRequest;
 use App\Http\Requests\StoreIndividualOrderRequest;
 use App\Http\Requests\storeofferorderRequest;
 use App\Http\Resources\FundingOrganizationResource;
+use App\Models\Campaign;
 use App\Models\Employee;
 use App\Models\Offer;
 use App\Models\OrderTracking;
@@ -56,17 +57,31 @@ class OrderController extends Controller
         $data['phone'] = convertArabicNumbers($data['phone']);
 
         $order = Order::create($data);
-     // Retrieve cookies
+
+        // Retrieve cookies
         $utmSource = $request->cookie('utm_source');
         $utmMedium = $request->cookie('utm_medium');
         $utmCampaign = $request->cookie('utm_campaign');
         $utmYear = $request->cookie('year');
 
-        // Check if at least one of the UTM cookies has a value
-        if ($utmSource || $utmMedium || $utmCampaign || $utmYear) {
-            // Proceed to create the OrderTracking only if any cookie is not null
+       // Retrieve cookies
+        $utmSource = $request->cookie('utm_source');
+        $utmMedium = $request->cookie('utm_medium');
+        $utmCampaign = $request->cookie('utm_campaign');
+        $utmYear = $request->cookie('year');
+
+        // Query the campaigns table using multiple UTM parameters
+        $campaign = Campaign::where('campaign_name', $utmCampaign)
+                            ->where('campaign_source', $utmSource)
+                            ->where('campaign_medium', $utmMedium)
+                            ->first(); // Retrieve the first matching campaign
+
+        // Check if at least one of the UTM cookies has a value and a valid campaign exists
+        if (($utmSource || $utmMedium || $utmCampaign || $utmYear) && $campaign) {
+            // Proceed to create the OrderTracking only if any cookie is not null and campaign is found
             OrderTracking::create([
                 'order_id' => $order->id,
+                'campaign_id' => $campaign->id, // Use the campaign ID
                 'utm_source' => $utmSource,
                 'utm_medium' => $utmMedium,
                 'utm_campaign' => $utmCampaign,
@@ -104,24 +119,31 @@ class OrderController extends Controller
         $data['phone'] = convertArabicNumbers($data['phone']);
 
         $order = Order::create($data);
-        // Retrieve cookies
-        $utmSource = $request->cookie('utm_source');
-        $utmMedium = $request->cookie('utm_medium');
-        $utmCampaign = $request->cookie('utm_campaign');
-        $utmYear = $request->cookie('year');
 
-        // Check if at least one of the UTM cookies has a value
-        if ($utmSource || $utmMedium || $utmCampaign || $utmYear) {
-            // Proceed to create the OrderTracking only if any cookie is not null
-            OrderTracking::create([
-                'order_id' => $order->id,
-                'utm_source' => $utmSource,
-                'utm_medium' => $utmMedium,
-                'utm_campaign' => $utmCampaign,
-                'utm_year' => $utmYear,
-            ]);
-        }
+          // Retrieve cookies
+          $utmSource = $request->cookie('utm_source');
+          $utmMedium = $request->cookie('utm_medium');
+          $utmCampaign = $request->cookie('utm_campaign');
+          $utmYear = $request->cookie('year');
 
+          // Query the campaigns table using multiple UTM parameters
+          $campaign = Campaign::where('campaign_name', $utmCampaign)
+                              ->where('campaign_source', $utmSource)
+                              ->where('campaign_medium', $utmMedium)
+                              ->first(); // Retrieve the first matching campaign
+
+          // Check if at least one of the UTM cookies has a value and a valid campaign exists
+          if (($utmSource || $utmMedium || $utmCampaign || $utmYear) && $campaign) {
+              // Proceed to create the OrderTracking only if any cookie is not null and campaign is found
+              OrderTracking::create([
+                  'order_id' => $order->id,
+                  'campaign_id' => $campaign->id, // Use the campaign ID
+                  'utm_source' => $utmSource,
+                  'utm_medium' => $utmMedium,
+                  'utm_campaign' => $utmCampaign,
+                  'utm_year' => $utmYear,
+              ]);
+          }
         $order->services()->attach($request['services'] ?? []);
         $this->sendOrderToZoho($order);
 
@@ -151,24 +173,30 @@ class OrderController extends Controller
 
         $order = Order::create($data);
 
-            // Retrieve cookies
+        // Retrieve cookies
         $utmSource = $request->cookie('utm_source');
         $utmMedium = $request->cookie('utm_medium');
         $utmCampaign = $request->cookie('utm_campaign');
         $utmYear = $request->cookie('year');
 
-        // Check if at least one of the UTM cookies has a value
-        if ($utmSource || $utmMedium || $utmCampaign || $utmYear) {
-            // Proceed to create the OrderTracking only if any cookie is not null
+        // Query the campaigns table using multiple UTM parameters
+        $campaign = Campaign::where('campaign_name', $utmCampaign)
+                            ->where('campaign_source', $utmSource)
+                            ->where('campaign_medium', $utmMedium)
+                            ->first(); // Retrieve the first matching campaign
+
+        // Check if at least one of the UTM cookies has a value and a valid campaign exists
+        if (($utmSource || $utmMedium || $utmCampaign || $utmYear) && $campaign) {
+            // Proceed to create the OrderTracking only if any cookie is not null and campaign is found
             OrderTracking::create([
                 'order_id' => $order->id,
+                'campaign_id' => $campaign->id, // Use the campaign ID
                 'utm_source' => $utmSource,
                 'utm_medium' => $utmMedium,
                 'utm_campaign' => $utmCampaign,
                 'utm_year' => $utmYear,
             ]);
         }
-
 
         $this->newUnavailableCarNotification($order);
         $this->sendMail($order);
@@ -216,23 +244,30 @@ class OrderController extends Controller
         // Create the order
         $order = Order::create($data);
      // Retrieve cookies
+  // Retrieve cookies
         $utmSource = $request->cookie('utm_source');
         $utmMedium = $request->cookie('utm_medium');
         $utmCampaign = $request->cookie('utm_campaign');
         $utmYear = $request->cookie('year');
 
-        // Check if at least one of the UTM cookies has a value
-        if ($utmSource || $utmMedium || $utmCampaign || $utmYear) {
-            // Proceed to create the OrderTracking only if any cookie is not null
+        // Query the campaigns table using multiple UTM parameters
+        $campaign = Campaign::where('campaign_name', $utmCampaign)
+                            ->where('campaign_source', $utmSource)
+                            ->where('campaign_medium', $utmMedium)
+                            ->first(); // Retrieve the first matching campaign
+
+        // Check if at least one of the UTM cookies has a value and a valid campaign exists
+        if (($utmSource || $utmMedium || $utmCampaign || $utmYear) && $campaign) {
+            // Proceed to create the OrderTracking only if any cookie is not null and campaign is found
             OrderTracking::create([
                 'order_id' => $order->id,
+                'campaign_id' => $campaign->id, // Use the campaign ID
                 'utm_source' => $utmSource,
                 'utm_medium' => $utmMedium,
                 'utm_campaign' => $utmCampaign,
                 'utm_year' => $utmYear,
             ]);
         }
-
         $this->sendOrderToZoho($order);
 
         // Optionally you can trigger notifications or emails here
