@@ -42,7 +42,7 @@ class ContactUsController extends Controller
       if (($utmSource || $utmMedium || $utmCampaign    ) && $campaign) {
           // Proceed to create the OrderTracking only if any cookie is not null and campaign is found
           OrderTracking::create([
-              'order_id' => $contactUsRequest->id,
+              'contact_id' => $contactUsRequest->id,
               'campaign_id' => $campaign->id, // Use the campaign ID
               'utm_source' => $utmSource,
               'utm_medium' => $utmMedium,
