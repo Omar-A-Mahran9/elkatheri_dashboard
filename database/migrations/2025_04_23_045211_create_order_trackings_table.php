@@ -24,7 +24,7 @@ class CreateOrderTrackingsTable extends Migration
 
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
             $table->foreign('campaign_id')->references('id')->on('campaigns')->onDelete('cascade');
-            $table->unsignedBigInteger('appointment_id')->nullable()->after('order_id');
+            $table->unsignedBigInteger('appointment_id')->nullable();
 
             $table->foreign('appointment_id')
                   ->references('id')
