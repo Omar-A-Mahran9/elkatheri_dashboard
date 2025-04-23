@@ -15,13 +15,13 @@ class CreateOrderTrackingsTable extends Migration
     {
         Schema::create('order_trackings', function (Blueprint $table) {
             $table->id();
+             $table->unsignedBigInteger('order_id'); // FK to orders
 
-            $table->unsignedBigInteger('order_id'); // FK to orders
             $table->string('utm_source')->nullable();
             $table->string('utm_medium')->nullable();
             $table->string('utm_campaign')->nullable();
             $table->string('utm_year')->nullable();
- 
+
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
 
             $table->timestamps();
