@@ -95,9 +95,12 @@ class AppointmentController extends Controller
 
 
        // Retrieve cookies
-        $utmSource = $request->cookie('utm_source');
-        $utmMedium = $request->cookie('utm_medium');
-        $utmCampaign = $request->cookie('utm_campaign');
+        // $utmSource = $request->cookie('utm_source');
+        // $utmMedium = $request->cookie('utm_medium');
+        // $utmCampaign = $request->cookie('utm_campaign');
+        $utmSource = $request->utm_source;
+        $utmMedium = $request->utm_medium;
+        $utmCampaign = $request->utm_campaign;
 
         // Query the campaigns table using multiple UTM parameters
         $campaign = Campaign::where('campaign_name', $utmCampaign)
