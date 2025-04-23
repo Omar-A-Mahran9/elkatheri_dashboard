@@ -243,7 +243,7 @@ class AppointmentController extends Controller
                     "Lead_Status" => 'New',      // Status of the lead (New by default)
                     "Industry" => 'agency',     // Industry type (hardcoded as 'agency' for now)
                     "Car_model" => $order->model->name?? 'N/A',    // Industry type (hardcoded as 'agency' for now)
-                    "Model_Year" => $order->model_year?? 'N/A',    // Industry type (hardcoded as 'agency' for now)
+                    "Model_year" => $order->model_year?? 'N/A',    // Industry type (hardcoded as 'agency' for now)
 
                     "Website" => 'https://alkathirimotors.com.sa/', // Website URL
                     "City" => $order->city->name ?? 'Unknown City',  // City

@@ -37,7 +37,7 @@ class StoreAppointmentRequest extends FormRequest
         'phone' => ['required', 'numeric', 'regex:/^0?5/'],
             'email' => 'required|string|max:255|email:rfc,dns',
             "description" =>'required|string',
-            "model_year" => 'required|digits:4|integer|min:1901|max:'.(date('Y')+1),
+            "Model_year" => 'required|digits:4|integer|min:1901|max:'.(date('Y')+1),
             'date' => 'required|date_format:Y-m-d',
             'time' => 'required|date_format:h:i A',
             'terms_and_privacy' => 'accepted',
