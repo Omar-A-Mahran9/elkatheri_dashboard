@@ -342,7 +342,31 @@ class OrderController extends Controller
             $firstName = $nameParts[0] ?? 'Unknown';
             $lastName = $nameParts[1] ?? 'Unknown';
 
-            $description = "طلب سيارة رقم: " . $order->id . " واسمها: " . ($order->car->name ?? '') . " وموديل: " . ($order->car->year ?? '');
+            $carName = $order->car->name ?? 'غير محدد';
+            $carYear = $order->car->year ?? 'غير معروف';
+
+            // جلب تتبع الحملة المرتبط بالطلب
+            $orderTracking = $order->orderTracking ?? null;
+
+            $utmSource = $orderTracking->utm_source ?? 'غير محدد';
+            $utmMedium = $orderTracking->utm_medium ?? 'غير محدد';
+            $utmCampaign = $orderTracking->utm_campaign ?? 'غير محدد';
+            $utmYear = $orderTracking->utm_year ?? 'غير معروف';
+
+            $description = "تفاصيل الطلب:\n"
+                         . "رقم الطلب: {$order->id}\n"
+                         . "اسم السيارة: {$carName}\n"
+                         . "موديل السيارة: {$carYear}\n"
+                         . "المدينة: " . ($order->city_name ?? 'غير محددة') . "\n"
+                         . "الاسم: " . ($order->name ?? 'غير معروف') . "\n"
+                         . "رقم الجوال: " . ($order->phone ?? 'غير متوفر') . "\n"
+                         . "رابط الطلب: https://admin.alkathirimotors.com.sa/dashboard/orders/{$order->id}\n"
+                         . "معلومات الحملة:\n"
+                         . "- المصدر (utm_source): {$utmSource}\n"
+                         . "- الوسيط (utm_medium): {$utmMedium}\n"
+                         . "- اسم الحملة (utm_campaign): {$utmCampaign}\n"
+                         . "- سنة الحملة (utm_year): {$utmYear}";
+
 
             // Retrieve UTM parameters from cookies
             $tracking = $order->tracking; // assuming `hasOne('App\Models\OrderTracking')`
@@ -361,6 +385,9 @@ class OrderController extends Controller
                         "Lead_Source" => 'website',  // Source of the lead
                         "Lead_Status" => 'New',      // Status of the lead (New by default)
                         "Industry" => 'agency',     // Industry type (hardcoded as 'agency' for now)
+                        "Car Model" => $order->car->model->name?? 'N/A',    // Industry type (hardcoded as 'agency' for now)
+                        "Model Year" => $order->car->year?? 'N/A',    // Industry type (hardcoded as 'agency' for now)
+
                         "Website" => 'https://alkathirimotors.com.sa/', // Website URL
                         "City" => $order->city_name ?? 'Unknown City',  // City
                         "Description" => $description ?? 'No description',  // Description of the lead
@@ -368,7 +395,7 @@ class OrderController extends Controller
                         "Created_Time" => $order->created_at->toIso8601String() ?? now()->toIso8601String(), // Lead creation time
                         "Modified_Time" => $order->updated_at->toIso8601String() ?? now()->toIso8601String(), // Lead modified time
                         // Include UTM parameters in the Zoho request payload
-                     "UTM_Source" => $tracking->utm_source ?? 'N/A',
+                          "UTM_Source" => $tracking->utm_source ?? 'N/A',
                         "UTM_Medium" => $tracking->utm_medium ?? 'N/A',
                         "UTM_Campaign" => $tracking->utm_campaign ?? 'N/A',
                      ]
