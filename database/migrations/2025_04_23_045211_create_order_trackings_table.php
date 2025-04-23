@@ -22,8 +22,7 @@ class CreateOrderTrackingsTable extends Migration
             $table->string('utm_medium')->nullable();
             $table->string('utm_campaign')->nullable();
             $table->string('utm_year')->nullable();
-            $table->timestamps();
-
+ 
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
             $table->foreign('campaign_id')->references('id')->on('campaigns')->onDelete('cascade');
 
