@@ -332,7 +332,6 @@ class OrderController extends Controller
 
             // Check if the access token is expired and refresh it if necessary
             if ($this->isTokenExpired($token)) {
-
                 $this->refreshZohoAccessToken($token);
             }
 
@@ -345,14 +344,21 @@ class OrderController extends Controller
 
             $description = "طلب سيارة رقم: " . $order->id . " واسمها: " . ($order->car->name ?? '') . " وموديل: " . ($order->car->year ?? '');
 
+            // Retrieve UTM parameters from cookies
+            $utmSource = $request->cookie('utm_source');
+            $utmMedium = $request->cookie('utm_medium');
+            $utmCampaign = $request->cookie('utm_campaign');
+            $utmYear = $request->cookie('year');
+
+            // Prepare the Zoho lead data
             $orderData = [
                 'data' => [
                     [
-                        "First_Name" => $firstName??" ",  // Customer's first name
-                        "Last_Name" => $lastName??" ",    // Customer's last name
+                        "First_Name" => $firstName ?? " ",  // Customer's first name
+                        "Last_Name" => $lastName ?? " ",    // Customer's last name
                         "Email" => $order->email ?? $order->organization_email ?? 'noemail@example.com', // Customer's email
-                        "Phone" => $order->phone??" ",    // Customer's phone number
-                        "Mobile" => $order->phone??" ",   // Customer's mobile number
+                        "Phone" => $order->phone ?? " ",    // Customer's phone number
+                        "Mobile" => $order->phone ?? " ",   // Customer's mobile number
                         "Company" => $order->organization_name ?? 'No Organization',  // Organization (if any)
                         "Lead_Source" => 'website',  // Source of the lead
                         "Lead_Status" => 'New',      // Status of the lead (New by default)
@@ -360,12 +366,14 @@ class OrderController extends Controller
                         "Website" => 'https://alkathirimotors.com.sa/', // Website URL
                         "City" => $order->city_name ?? 'Unknown City',  // City
                         "Description" => $description ?? 'No description',  // Description of the lead
-                        // "Model Year" => $order->car->year ?? 2024,  // Model Year (adjust dynamically)
-                        // "Car Model" => $order->car->model_name ?? '-',  // Car Model
-                        // "Purchase style" => $order->payment_type ?? '-', // Purchase Style (cash/finance)
                         "Lead_Type" => 'Warm',  // Lead type (Hot, Warm, Cold)
                         "Created_Time" => $order->created_at->toIso8601String() ?? now()->toIso8601String(), // Lead creation time
                         "Modified_Time" => $order->updated_at->toIso8601String() ?? now()->toIso8601String(), // Lead modified time
+                        // Include UTM parameters in the Zoho request payload
+                        "UTM_Source" => $utmSource ?? 'Unknown', // UTM Source
+                        "UTM_Medium" => $utmMedium ?? 'Unknown', // UTM Medium
+                        "UTM_Campaign" => $utmCampaign ?? 'Unknown', // UTM Campaign
+                        "UTM_Year" => $utmYear ?? 'Unknown', // UTM Year
                     ]
                 ]
             ];
@@ -375,7 +383,7 @@ class OrderController extends Controller
                             ->acceptJson()  // Ensure JSON response is accepted
                             ->post('https://www.zohoapis.com/crm/v2/Leads', $orderData);
 
-             // Check if the response is successful
+            // Check if the response is successful
             if ($response->successful()) {
                 return response()->json([
                     'message' => 'Order sent to Zoho CRM successfully.',
@@ -389,6 +397,7 @@ class OrderController extends Controller
                 ], 400);
             }
         }
+
 
         /**
          * Check if the Zoho access token is expired.
