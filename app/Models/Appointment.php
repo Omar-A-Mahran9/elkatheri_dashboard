@@ -36,4 +36,9 @@ class Appointment extends Model
     {
         return $this->belongsTo(Brand::class);
     }
+
+    public function tracking()
+    {
+        return $this->hasOne(OrderTracking::class,'appointment_id');
+    }
 }

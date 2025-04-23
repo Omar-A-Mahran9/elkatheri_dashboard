@@ -78,7 +78,7 @@ class Order extends Model
 
     public function tracking()
 {
-    return $this->hasOne(OrderTracking::class);
+    return $this->hasOne(OrderTracking::class,'order_id');
 }
 
 

@@ -58,10 +58,6 @@ class OrderController extends Controller
 
         $order = Order::create($data);
 
-        // Retrieve cookies
-        $utmSource = $request->cookie('utm_source');
-        $utmMedium = $request->cookie('utm_medium');
-        $utmCampaign = $request->cookie('utm_campaign');
 
        // Retrieve cookies
         $utmSource = $request->cookie('utm_source');
@@ -236,8 +232,7 @@ class OrderController extends Controller
 
         // Create the order
         $order = Order::create($data);
-     // Retrieve cookies
-  // Retrieve cookies
+   // Retrieve cookies
         $utmSource = $request->cookie('utm_source');
         $utmMedium = $request->cookie('utm_medium');
         $utmCampaign = $request->cookie('utm_campaign');
@@ -424,7 +419,7 @@ class OrderController extends Controller
                                         "UTM_Campaign" => $tracking->utm_campaign ?? 'N/A',
                                      ]
                                     ]
-                                
+
                             ];
 
             $dealResponse = Http::withToken($token->access_token)
