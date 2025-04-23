@@ -56,13 +56,24 @@ class OrderController extends Controller
         $data['phone'] = convertArabicNumbers($data['phone']);
 
         $order = Order::create($data);
-        OrderTracking::create([
-            'order_id' => $order->id,
-            'utm_source' => $request->cookie('utm_source'),
-            'utm_medium' => $request->cookie('utm_medium'),
-            'utm_campaign' => $request->cookie('utm_campaign'),
-            'utm_year' => $request->cookie('year'),
-        ]);
+     // Retrieve cookies
+        $utmSource = $request->cookie('utm_source');
+        $utmMedium = $request->cookie('utm_medium');
+        $utmCampaign = $request->cookie('utm_campaign');
+        $utmYear = $request->cookie('year');
+
+        // Check if at least one of the UTM cookies has a value
+        if ($utmSource || $utmMedium || $utmCampaign || $utmYear) {
+            // Proceed to create the OrderTracking only if any cookie is not null
+            OrderTracking::create([
+                'order_id' => $order->id,
+                'utm_source' => $utmSource,
+                'utm_medium' => $utmMedium,
+                'utm_campaign' => $utmCampaign,
+                'utm_year' => $utmYear,
+            ]);
+        }
+
         $order->services()->attach($request['services'] ?? []);
         $this->sendOrderToZoho($order);
 
@@ -93,13 +104,24 @@ class OrderController extends Controller
         $data['phone'] = convertArabicNumbers($data['phone']);
 
         $order = Order::create($data);
-        OrderTracking::create([
-            'order_id' => $order->id,
-            'utm_source' => $request->cookie('utm_source'),
-            'utm_medium' => $request->cookie('utm_medium'),
-            'utm_campaign' => $request->cookie('utm_campaign'),
-            'utm_year' => $request->cookie('year'),
-        ]);
+        // Retrieve cookies
+        $utmSource = $request->cookie('utm_source');
+        $utmMedium = $request->cookie('utm_medium');
+        $utmCampaign = $request->cookie('utm_campaign');
+        $utmYear = $request->cookie('year');
+
+        // Check if at least one of the UTM cookies has a value
+        if ($utmSource || $utmMedium || $utmCampaign || $utmYear) {
+            // Proceed to create the OrderTracking only if any cookie is not null
+            OrderTracking::create([
+                'order_id' => $order->id,
+                'utm_source' => $utmSource,
+                'utm_medium' => $utmMedium,
+                'utm_campaign' => $utmCampaign,
+                'utm_year' => $utmYear,
+            ]);
+        }
+
         $order->services()->attach($request['services'] ?? []);
         $this->sendOrderToZoho($order);
 
@@ -129,15 +151,24 @@ class OrderController extends Controller
 
         $order = Order::create($data);
 
-        // ...
+            // Retrieve cookies
+        $utmSource = $request->cookie('utm_source');
+        $utmMedium = $request->cookie('utm_medium');
+        $utmCampaign = $request->cookie('utm_campaign');
+        $utmYear = $request->cookie('year');
 
-        OrderTracking::create([
-            'order_id' => $order->id,
-            'utm_source' => $request->cookie('utm_source'),
-            'utm_medium' => $request->cookie('utm_medium'),
-            'utm_campaign' => $request->cookie('utm_campaign'),
-            'utm_year' => $request->cookie('year'),
-        ]);
+        // Check if at least one of the UTM cookies has a value
+        if ($utmSource || $utmMedium || $utmCampaign || $utmYear) {
+            // Proceed to create the OrderTracking only if any cookie is not null
+            OrderTracking::create([
+                'order_id' => $order->id,
+                'utm_source' => $utmSource,
+                'utm_medium' => $utmMedium,
+                'utm_campaign' => $utmCampaign,
+                'utm_year' => $utmYear,
+            ]);
+        }
+
 
         $this->newUnavailableCarNotification($order);
         $this->sendMail($order);
@@ -184,13 +215,24 @@ class OrderController extends Controller
 
         // Create the order
         $order = Order::create($data);
-        OrderTracking::create([
-            'order_id' => $order->id,
-            'utm_source' => $request->cookie('utm_source'),
-            'utm_medium' => $request->cookie('utm_medium'),
-            'utm_campaign' => $request->cookie('utm_campaign'),
-            'utm_year' => $request->cookie('year'),
-        ]);
+     // Retrieve cookies
+        $utmSource = $request->cookie('utm_source');
+        $utmMedium = $request->cookie('utm_medium');
+        $utmCampaign = $request->cookie('utm_campaign');
+        $utmYear = $request->cookie('year');
+
+        // Check if at least one of the UTM cookies has a value
+        if ($utmSource || $utmMedium || $utmCampaign || $utmYear) {
+            // Proceed to create the OrderTracking only if any cookie is not null
+            OrderTracking::create([
+                'order_id' => $order->id,
+                'utm_source' => $utmSource,
+                'utm_medium' => $utmMedium,
+                'utm_campaign' => $utmCampaign,
+                'utm_year' => $utmYear,
+            ]);
+        }
+
         $this->sendOrderToZoho($order);
 
         // Optionally you can trigger notifications or emails here
