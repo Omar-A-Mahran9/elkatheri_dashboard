@@ -378,7 +378,7 @@ class OrderController extends Controller
                         "Lead_Source" => 'website',  // Source of the lead
                         "Lead_Status" => 'New',      // Status of the lead (New by default)
                         "Industry" => 'agency',     // Industry type (hardcoded as 'agency' for now)
-                        "Car_Model" => $order->car->model->name?? 'N/A',    // Industry type (hardcoded as 'agency' for now)
+                        "Car_model" => $order->car->model->name?? 'N/A',    // Industry type (hardcoded as 'agency' for now)
                         "Model_Year" => $order->car->year?? 'N/A',    // Industry type (hardcoded as 'agency' for now)
 
                         "Website" => 'https://alkathirimotors.com.sa/', // Website URL

@@ -213,9 +213,9 @@ class AppointmentController extends Controller
                      . "رقم الطلب: {$order->id}\n"
                      . "اسم السيارة: {$carName}\n"
                      . "موديل السيارة: {$carYear}\n"
-                     . "المدينة: " . ($order->city_name ?? 'غير محددة') . "\n"
+                     . "المدينة: " . ($order->city->name ?? 'غير محددة') . "\n"
                      . "الاسم: " . ($order->name ?? 'غير معروف') . "\n"
-                     . "رقم الجوال: " . ($order->phone ?? 'غير متوفر') . "\n"
+                     . "رقم الجوال: " . (formatSaudiPhoneNumber($order->phone) ?? 'غير متوفر') . "\n"
                      . "رابط الطلب: https://admin.alkathirimotors.com.sa/dashboard/appointments/{$order->id}\n"
                      . "معلومات الحملة:\n"
                      . "- المصدر: {$utmSource}\n"
@@ -234,13 +234,13 @@ class AppointmentController extends Controller
                     "First_Name" => $firstName ?? " ",  // Customer's first name
                     "Last_Name" => $lastName ?? " ",    // Customer's last name
                     "Email" => $order->email ?? $order->organization_email ?? 'noemail@example.com', // Customer's email
-                    "Phone" => $formattedPhone ?? " ",    // Customer's phone number
-                    "Mobile" => $formattedPhone ?? " ",   // Customer's mobile number
+                    "Phone" => formatSaudiPhoneNumber($order->phone) ?? " ",    // Customer's phone number
+                    "Mobile" => formatSaudiPhoneNumber($order->phone) ?? " ",   // Customer's mobile number
                     "Lead_Source" => 'website',  // Source of the lead
                     "Lead_Status" => 'New',      // Status of the lead (New by default)
                     "Industry" => 'agency',     // Industry type (hardcoded as 'agency' for now)
-                    "Car_Model" => $order->model->name?? 'N/A',    // Industry type (hardcoded as 'agency' for now)
-                    "Model_Year" => $order->year?? 'N/A',    // Industry type (hardcoded as 'agency' for now)
+                    "Car_model" => $order->model->name?? 'N/A',    // Industry type (hardcoded as 'agency' for now)
+                    "Model_Year" => $order->model_year?? 'N/A',    // Industry type (hardcoded as 'agency' for now)
 
                     "Website" => 'https://alkathirimotors.com.sa/', // Website URL
                     "City" => $order->city->name ?? 'Unknown City',  // City
