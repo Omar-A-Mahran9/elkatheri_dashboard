@@ -364,7 +364,7 @@ class OrderController extends Controller
                          . "معلومات الحملة:\n"
                          . "- المصدر (utm_source): {$utmSource}\n"
                          . "- الوسيط (utm_medium): {$utmMedium}\n"
-                         . "- اسم الحملة (utm_campaign): {$utmCampaign}\n"
+                         . "- اسم الحملة (utm_campaign): {$utmCampaign}\n";
 
 
             // Retrieve UTM parameters from cookies
