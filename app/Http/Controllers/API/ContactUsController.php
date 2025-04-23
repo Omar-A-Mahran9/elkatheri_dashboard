@@ -37,6 +37,7 @@ class ContactUsController extends Controller
                           ->where('campaign_source', $utmSource)
                           ->where('campaign_medium', $utmMedium)
                           ->first(); // Retrieve the first matching campaign
+                          dd($campaign,$utmSource,$utmMedium,$utmCampaign);
 
       // Check if at least one of the UTM cookies has a value and a valid campaign exists
       if (($utmSource || $utmMedium || $utmCampaign    ) && $campaign) {
@@ -94,7 +95,6 @@ class ContactUsController extends Controller
         $utmSource = $orderTracking->utm_source ?? 'غير محدد';
         $utmMedium = $orderTracking->utm_medium ?? 'غير محدد';
         $utmCampaign = $orderTracking->utm_campaign ?? 'غير محدد';
-
         $description = "تفاصيل الطلب:\n"
                      . "رقم الطلب: {$order->id}\n"
                      . "الاسم بالكامل : {$order->name}\n"
@@ -138,7 +138,7 @@ class ContactUsController extends Controller
                         ->acceptJson()  // Ensure JSON response is accepted
                         ->post('https://www.zohoapis.com/crm/v2/Leads', $orderData);
 
- 
+
                $dealData = [
                             'data' => [
                                 [
