@@ -23,6 +23,7 @@ use App\Http\Requests\storeofferorderRequest;
 use App\Http\Resources\FundingOrganizationResource;
 use App\Models\Employee;
 use App\Models\Offer;
+use App\Models\OrderTracking;
 use App\Models\ZohoToken;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -55,6 +56,13 @@ class OrderController extends Controller
         $data['phone'] = convertArabicNumbers($data['phone']);
 
         $order = Order::create($data);
+        OrderTracking::create([
+            'order_id' => $order->id,
+            'utm_source' => $request->cookie('utm_source'),
+            'utm_medium' => $request->cookie('utm_medium'),
+            'utm_campaign' => $request->cookie('utm_campaign'),
+            'utm_year' => $request->cookie('year'),
+        ]);
         $order->services()->attach($request['services'] ?? []);
         $this->sendOrderToZoho($order);
 
@@ -85,6 +93,13 @@ class OrderController extends Controller
         $data['phone'] = convertArabicNumbers($data['phone']);
 
         $order = Order::create($data);
+        OrderTracking::create([
+            'order_id' => $order->id,
+            'utm_source' => $request->cookie('utm_source'),
+            'utm_medium' => $request->cookie('utm_medium'),
+            'utm_campaign' => $request->cookie('utm_campaign'),
+            'utm_year' => $request->cookie('year'),
+        ]);
         $order->services()->attach($request['services'] ?? []);
         $this->sendOrderToZoho($order);
 
@@ -111,14 +126,19 @@ class OrderController extends Controller
          $data['terms_and_privacy'] = $data['terms_and_privacy'] ? 1 : 0;
 
 
-                // Read cookies
-            $data['utm_source'] = $request->cookie('utm_source');
-            $data['utm_medium'] = $request->cookie('utm_medium');
-            $data['utm_campaign'] = $request->cookie('utm_campaign');
-            $data['utm_year'] = $request->cookie('year');
-
 
         $order = Order::create($data);
+
+        // ...
+
+        OrderTracking::create([
+            'order_id' => $order->id,
+            'utm_source' => $request->cookie('utm_source'),
+            'utm_medium' => $request->cookie('utm_medium'),
+            'utm_campaign' => $request->cookie('utm_campaign'),
+            'utm_year' => $request->cookie('year'),
+        ]);
+
         $this->newUnavailableCarNotification($order);
         $this->sendMail($order);
         $this->sendOrderToZoho($order);
@@ -164,6 +184,13 @@ class OrderController extends Controller
 
         // Create the order
         $order = Order::create($data);
+        OrderTracking::create([
+            'order_id' => $order->id,
+            'utm_source' => $request->cookie('utm_source'),
+            'utm_medium' => $request->cookie('utm_medium'),
+            'utm_campaign' => $request->cookie('utm_campaign'),
+            'utm_year' => $request->cookie('year'),
+        ]);
         $this->sendOrderToZoho($order);
 
         // Optionally you can trigger notifications or emails here
