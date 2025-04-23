@@ -39,7 +39,7 @@
     <!-- end   :: Subheader -->
     <div class="row g-6 g-xl-9 mb-10 ">
         <!--begin::Col-->
-        <div class="col-md-12 col-xl-6 ">
+        <div class="col-md-12 col-xl-12 ">
             <!--begin::Card-->
             <div class="card border-hover-primary ">
                 <!--begin::Card header-->
