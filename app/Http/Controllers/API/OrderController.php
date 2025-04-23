@@ -346,7 +346,7 @@ class OrderController extends Controller
             $carYear = $order->car->year ?? 'غير معروف';
 
             // جلب تتبع الحملة المرتبط بالطلب
-            $orderTracking = $order->orderTracking ?? null;
+            $orderTracking = $order->tracking ?? null;
 
             $utmSource = $orderTracking->utm_source ?? 'غير محدد';
             $utmMedium = $orderTracking->utm_medium ?? 'غير محدد';
@@ -365,7 +365,6 @@ class OrderController extends Controller
                          . "- المصدر (utm_source): {$utmSource}\n"
                          . "- الوسيط (utm_medium): {$utmMedium}\n"
                          . "- اسم الحملة (utm_campaign): {$utmCampaign}\n"
-                         . "- سنة الحملة (utm_year): {$utmYear}";
 
 
             // Retrieve UTM parameters from cookies
