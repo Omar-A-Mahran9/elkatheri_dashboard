@@ -86,7 +86,7 @@ class AppointmentController extends Controller
     }
     public function store(StoreAppointmentRequest $request)
     {
-        
+        dd($request);
         $appointment = $this->appointmentService->store($request);
         $this->newAppointmentNotification($appointment);
        $formattedPhone = formatSaudiPhoneNumber($appointment->phone);
@@ -100,21 +100,21 @@ class AppointmentController extends Controller
                   Mail::send('mails.maintenance',[ 'appointment' =>  $appointment ],function($message) use($appointment){
                 $message->to(settings()->get('email'))->subject(__('New maintenance appointment'));
             }) ;
-       
+
 
             // Send SMS reminder
              $smsResult = SendMaintenanceReminder(
             $formattedPhone,
             $appointment->id,
              $dateOnly = $appointment->date ? date('Y-m-d', strtotime($appointment->date)) : null,
-            
+
             $timeOnly = $appointment->time ? date('g:i a', strtotime($appointment->time)) : null,
 
 
             $appointment->branch->name
         );
 
-   
+
 
         if($appointment == null)
         {
@@ -133,26 +133,26 @@ class AppointmentController extends Controller
                 'params' => $smsResult['params']
             ];
         }
-        
+
         // Return the appointment with error details if any
         return response()->json([
             'data' => new AppointmentResource($appointment),
             'errors' => $errorDetails
         ]);
-        
 
-        
 
-       
-        
+
+
+
+
         } catch (\Throwable $th) {
             return ($th->getMessage()) ;
         }
 
-      
+
     }
-    
- 
+
+
 
 
 }
