@@ -99,6 +99,9 @@ class ContactUsController extends Controller
                      . "الاسم بالكامل : {$order->name}\n"
                      . "الايميل: " . ($order->email ?? 'غير محددة') . "\n"
                      . "رقم الجوال: " . ($order->phone ?? 'غير متوفر') . "\n"
+                     . "عنوان الرسالة: " . ($order->title ?? 'غير متوفر') . "\n"
+                     . "محتوى الرسالة: " . ($order->message ?? 'غير متوفر') . "\n"
+
                      . "رابط الطلب:https://admin.alkathirimotors.com.sa/dashboard/contact-us/{$order->id}/edit\n"
                      . "معلومات الحملة:\n"
                      . "- المصدر: {$utmSource}\n"
