@@ -110,32 +110,33 @@ class ContactUsController extends Controller
         $tracking = $order->tracking; // assuming `hasOne('App\Models\OrderTracking')`
 
         // Prepare the Zoho lead data
+        $utm = [
+            "UTM_Source" => $tracking->utm_source ?? 'N/A',
+            "UTM_Medium" => $tracking->utm_medium ?? 'N/A',
+            "UTM_Campaign" => $tracking->utm_campaign ?? 'N/A',
+        ];
+
+        $data = [
+            "First_Name" => $order->name ?? 'Unknown',
+            "Email" => $order->email ?? 'noemail@example.com',
+            "Phone" => $order->phone ?? 'Unknown',
+            "Lead_Source" => 'website',
+            "Lead_Status" => 'New',
+            "Industry" => 'agency',
+            "Website" => 'https://alkathirimotors.com.sa/',
+            "Description" => $description ?? 'No description',
+            "Lead_Type" => 'Warm',
+            "Created_Time" => optional($order->created_at)->toIso8601String() ?? now()->toIso8601String(),
+            "Modified_Time" => optional($order->updated_at)->toIso8601String() ?? now()->toIso8601String(),
+        ] + $utm;
+
         $orderData = [
-            $utm = [
-                "UTM_Source" => $tracking->utm_source ?? 'N/A',
-                "UTM_Medium" => $tracking->utm_medium ?? 'N/A',
-                "UTM_Campaign" => $tracking->utm_campaign ?? 'N/A',
-            ];
-
-            $data = [
-                "First_Name" => $order->name ?? 'Unknown',
-                "Email" => $order->email ?? 'noemail@example.com',
-                "Phone" => $order->phone ?? 'Unknown',
-                "Lead_Source" => 'website',
-                "Lead_Status" => 'New',
-                "Industry" => 'agency',
-                "Website" => 'https://alkathirimotors.com.sa/',
-                "Description" => $description ?? 'No description',
-                "Lead_Type" => 'Warm',
-                "Created_Time" => optional($order->created_at)->toIso8601String() ?? now()->toIso8601String(),
-                "Modified_Time" => optional($order->updated_at)->toIso8601String() ?? now()->toIso8601String(),
-            ] + $utm;
-
+            'data' => [$data],
         ];
 
         // Send the data to Zoho CRM using the Zoho API
         $response = Http::withToken($token->access_token)
-                        ->acceptJson()  // Ensure JSON response is accepted
+                        ->acceptJson()
                         ->post('https://www.zohoapis.com/crm/v2/Leads', $orderData);
 
 
