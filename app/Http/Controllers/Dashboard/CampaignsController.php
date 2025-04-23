@@ -85,7 +85,14 @@ class CampaignsController extends Controller
             'shorten_link'     => 'nullable|url|max:255',
             'website_url'      => 'nullable|url|max:255',
         ]);
+   // Extract the shorten_code from shorten_link
+   if (!empty($data['shorten_link'])) {
+    $parsedUrl = parse_url($data['shorten_link'], PHP_URL_PATH);
+    $shortenCode = trim($parsedUrl, '/short/'); // Get the last segment
 
+    // Store the shorten code in the data array
+    $data['shorten_code'] = $shortenCode;
+}
         $campaign->update($data);
 
         return redirect()->back()->with('success', 'Campaign updated successfully.');
