@@ -182,7 +182,7 @@ class AppointmentController extends Controller
     }
 
 
-    public function sendOrderToZoho(Order $order)
+    public function sendOrderToZoho(Appointment $order)
     {
         // Retrieve the Zoho access token from the DB
         $token = ZohoToken::first();
@@ -208,8 +208,7 @@ class AppointmentController extends Controller
         $utmSource = $orderTracking->utm_source ?? 'غير محدد';
         $utmMedium = $orderTracking->utm_medium ?? 'غير محدد';
         $utmCampaign = $orderTracking->utm_campaign ?? 'غير محدد';
-        $utmYear = $orderTracking->utm_year ?? 'غير معروف';
-
+ 
         $description = "تفاصيل الطلب:\n"
                      . "رقم الطلب: {$order->id}\n"
                      . "اسم السيارة: {$carName}\n"
@@ -217,7 +216,7 @@ class AppointmentController extends Controller
                      . "المدينة: " . ($order->city_name ?? 'غير محددة') . "\n"
                      . "الاسم: " . ($order->name ?? 'غير معروف') . "\n"
                      . "رقم الجوال: " . ($order->phone ?? 'غير متوفر') . "\n"
-                     . "رابط الطلب: https://admin.alkathirimotors.com.sa/dashboard/orders/{$order->id}\n"
+                     . "رابط الطلب: https://admin.alkathirimotors.com.sa/dashboard/appointments/{$order->id}\n"
                      . "معلومات الحملة:\n"
                      . "- المصدر: {$utmSource}\n"
                      . "- الوسيط : {$utmMedium}\n"
