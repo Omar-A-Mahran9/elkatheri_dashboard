@@ -362,9 +362,9 @@ class OrderController extends Controller
                          . "رقم الجوال: " . ($order->phone ?? 'غير متوفر') . "\n"
                          . "رابط الطلب: https://admin.alkathirimotors.com.sa/dashboard/orders/{$order->id}\n"
                          . "معلومات الحملة:\n"
-                         . "- المصدر (utm_source): {$utmSource}\n"
-                         . "- الوسيط (utm_medium): {$utmMedium}\n"
-                         . "- اسم الحملة (utm_campaign): {$utmCampaign}\n";
+                         . "- المصدر: {$utmSource}\n"
+                         . "- الوسيط : {$utmMedium}\n"
+                         . "- اسم الحملة : {$utmCampaign}\n";
 
 
             // Retrieve UTM parameters from cookies
