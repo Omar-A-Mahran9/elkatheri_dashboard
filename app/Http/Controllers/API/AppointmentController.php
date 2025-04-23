@@ -208,7 +208,7 @@ class AppointmentController extends Controller
         $utmSource = $orderTracking->utm_source ?? 'غير محدد';
         $utmMedium = $orderTracking->utm_medium ?? 'غير محدد';
         $utmCampaign = $orderTracking->utm_campaign ?? 'غير محدد';
- 
+
         $description = "تفاصيل الطلب:\n"
                      . "رقم الطلب: {$order->id}\n"
                      . "اسم السيارة: {$carName}\n"
@@ -234,8 +234,8 @@ class AppointmentController extends Controller
                     "First_Name" => $firstName ?? " ",  // Customer's first name
                     "Last_Name" => $lastName ?? " ",    // Customer's last name
                     "Email" => $order->email ?? $order->organization_email ?? 'noemail@example.com', // Customer's email
-                    "Phone" => $order->phone ?? " ",    // Customer's phone number
-                    "Mobile" => $order->phone ?? " ",   // Customer's mobile number
+                    "Phone" => $formattedPhone ?? " ",    // Customer's phone number
+                    "Mobile" => $formattedPhone ?? " ",   // Customer's mobile number
                     "Company" => $order->organization_name ?? 'No Organization',  // Organization (if any)
                     "Lead_Source" => 'website',  // Source of the lead
                     "Lead_Status" => 'New',      // Status of the lead (New by default)
@@ -268,7 +268,7 @@ class AppointmentController extends Controller
                                 [
                                     'Deal_Name' =>  $order->name,  // اسم العرض
                                     'Deal_Owner' => $order->name,  // اسم العرض
-                                    "Phone" => $order->phone ?? " ",    // Customer's phone number
+                                    "Phone" => $formattedPhone ?? " ",    // Customer's phone number
                                     "Email" => $order->email ?? $order->organization_email ?? 'noemail@example.com', // Customer's email
                                     'Amount' => $order->price ?? 0,  // السعر (إن وجد)
                                     'Closing_Date' => now()->addDays(14)->toDateString(),  // تاريخ الإغلاق المتوقع
