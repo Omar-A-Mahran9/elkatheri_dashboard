@@ -58,9 +58,9 @@ class OrderController extends Controller
 
         $order = Order::create($data);
 
-        $utmSource = $request->utm_source ??'N/a';
-        $utmMedium = $request->utm_medium??'N/a';
-        $utmCampaign = $request->utm_campaign??'N/a';
+        $utmSource = $request->utm_source;
+        $utmMedium = $request->utm_medium;
+        $utmCampaign = $request->utm_campaign;
 
        // Retrieve cookies
         // $utmSource = $request->cookie('utm_source');
@@ -170,13 +170,14 @@ class OrderController extends Controller
 
         $order = Order::create($data);
 
+        $utmSource = $request->utm_source;
+        $utmMedium = $request->utm_medium;
+        $utmCampaign = $request->utm_campaign;
+
         // Retrieve cookies
         // $utmSource = $request->cookie('utm_source');
         // $utmMedium = $request->cookie('utm_medium');
         // $utmCampaign = $request->cookie('utm_campaign');
-        $utmSource = $request->utm_source;
-        $utmMedium = $request->utm_medium;
-        $utmCampaign = $request->utm_campaign;
 
         // Query the campaigns table using multiple UTM parameters
         $campaign = Campaign::where('campaign_name', $utmCampaign)
@@ -245,6 +246,7 @@ class OrderController extends Controller
         // $utmSource = $request->cookie('utm_source');
         // $utmMedium = $request->cookie('utm_medium');
         // $utmCampaign = $request->cookie('utm_campaign');
+
         $utmSource = $request->utm_source;
         $utmMedium = $request->utm_medium;
         $utmCampaign = $request->utm_campaign;
