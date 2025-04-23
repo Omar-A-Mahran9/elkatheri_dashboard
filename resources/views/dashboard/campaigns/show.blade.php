@@ -100,7 +100,8 @@
                     <!--begin::Card Title-->
                     <div class="card-title m-0">
                         <!--begin::Avatar-->
-                        <div class=" w-35px h-35px bg-light m-auto d-flex justify-content-center align-items-center">
+                        <div
+                            class="w-35px h-35px bg-light m-auto d-flex justify-content-center align-items-center rounded-circle">
                             <svg xmlns="http://www.w3.org/2000/svg" width="27" height="27" viewBox="0 0 18 18"
                                 fill="none">
                                 <path fill-rule="evenodd" clip-rule="evenodd"
