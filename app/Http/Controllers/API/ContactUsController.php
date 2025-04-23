@@ -161,7 +161,7 @@ class ContactUsController extends Controller
                                     'Closing_Date' => now()->addDays(14)->toDateString(),  // تاريخ الإغلاق المتوقع
                                     'Lead_Source' =>   'website',
                                     'Description' => $description,
-                                    "Purchase_style"=>$order->payment_type,
+                                    "Purchase_Style"=>$order->payment_type,
                                     "UTM_Source" => $tracking->utm_source ?? 'N/A',
                                     "UTM_Medium" => $tracking->utm_medium ?? 'N/A',
                                     "UTM_Campaign" => $tracking->utm_campaign ?? 'N/A',

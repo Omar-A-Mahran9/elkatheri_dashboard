@@ -412,8 +412,8 @@ class OrderController extends Controller
             $response = Http::withToken($token->access_token)
                             ->acceptJson()  // Ensure JSON response is accepted
                             ->post('https://www.zohoapis.com/crm/v2/Leads', $orderData);
-dd($response);
-                   $dealData = [
+
+                    $dealData = [
                                 'data' => [
                                     [
                                         'Deal_Name' =>  $order->name,  // اسم العرض
@@ -424,7 +424,9 @@ dd($response);
                                         'Closing_Date' => now()->addDays(14)->toDateString(),  // تاريخ الإغلاق المتوقع
                                         'Lead_Source' =>   'website',
                                         'Description' => $description,
-                                        "Purchase_style"=>$order->payment_type,
+                                        "Car_model" => $order->car->model->name?? 'N/A',    // Industry type (hardcoded as 'agency' for now)
+                                        "Model_year" => $order->car->year?? 'N/A',    // Industry type (hardcoded as 'agency' for now)
+                                        "Purchase_Style"=>$order->payment_type??'N/A',
                                         "UTM_Source" => $tracking->utm_source ?? 'N/A',
                                         "UTM_Medium" => $tracking->utm_medium ?? 'N/A',
                                         "UTM_Campaign" => $tracking->utm_campaign ?? 'N/A',
@@ -434,10 +436,10 @@ dd($response);
                             ];
 
             $dealResponse = Http::withToken($token->access_token)
-                                                ->acceptJson()
-                                                ->post('https://www.zohoapis.com/crm/v2/Deals', $dealData);
+                            ->acceptJson()
+                            ->post('https://www.zohoapis.com/crm/v2/Deals', $dealData);
 
-
+dd( $dealResponse);
             // Check if the response is successful
             if ($response->successful()) {
                 return response()->json([
