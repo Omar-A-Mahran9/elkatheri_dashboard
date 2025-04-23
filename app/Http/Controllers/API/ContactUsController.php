@@ -37,12 +37,11 @@ class ContactUsController extends Controller
                           ->where('campaign_source', $utmSource)
                           ->where('campaign_medium', $utmMedium)
                           ->first(); // Retrieve the first matching campaign
-                          dd($campaign,$utmSource,$utmMedium,$utmCampaign);
 
       // Check if at least one of the UTM cookies has a value and a valid campaign exists
       if (($utmSource || $utmMedium || $utmCampaign    ) && $campaign) {
-          // Proceed to create the OrderTracking only if any cookie is not null and campaign is found
-          OrderTracking::create([
+        dd($contactUsRequest->id,$utmSource,$utmMedium,$utmCampaign);
+        OrderTracking::create([
               'contact_id' => $contactUsRequest->id,
               'campaign_id' => $campaign->id, // Use the campaign ID
               'utm_source' => $utmSource,
