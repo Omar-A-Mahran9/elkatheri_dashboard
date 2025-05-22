@@ -91,6 +91,12 @@ class AppointmentController extends Controller
     }
     public function store(StoreAppointmentRequest $request)
     {
+        if (empty($request->time)) {
+    throw ValidationException::withMessages([
+        'time' => 'Time is required.',
+    ]);
+}
+
          $appointment = $this->appointmentService->store($request);
 
 
