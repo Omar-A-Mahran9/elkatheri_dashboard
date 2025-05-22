@@ -82,7 +82,7 @@ class AppointmentController extends Controller
         });
 
         return response()->json([
-            "days_of" => Schedule::whereIsAvailable(false)->get()->pluck('day_of_week')->toArray(),
+            "days_of" => Schedule::whereIsAvailable(true)->get()->pluck('day_of_week')->toArray(),
             "start_date" => now()->format('Y-m-d'),
             "end_date" => now()->addMonths(2)->format('Y-m-d'),
             "brands" => $brandsWithModels,
