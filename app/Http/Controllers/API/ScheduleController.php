@@ -17,6 +17,6 @@ class ScheduleController extends Controller
             return [];
         }
 
-        return (new ScheduleService())->timeSlots($request);
+        return (new ScheduleService())->timeSlots($request) ?? [];
     }
 }
