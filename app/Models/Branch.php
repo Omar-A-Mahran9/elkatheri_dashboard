@@ -45,7 +45,7 @@ class Branch extends Model
     }
 
 
-public function availableDatesBetween($startDate, $endDate)
+public function unavailableDatesBetween($startDate, $endDate)
 {
     $availableDays = $this->schedule()
         ->where('is_available', true)
