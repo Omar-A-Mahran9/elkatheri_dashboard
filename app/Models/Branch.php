@@ -70,5 +70,24 @@ public function unavailableDatesBetween($startDate, $endDate)
     return $dates;
 }
 
+public function availableDatesBetween($startDate, $endDate)
+{
+    $availableDays = $this->schedule()->where('is_available', true)->pluck('day_of_week')->toArray();
+
+    $dates = [];
+    $date = \Carbon\Carbon::parse($startDate);
+    $end = \Carbon\Carbon::parse($endDate);
+
+    while ($date->lte($end)) {
+        if (in_array($date->format('l'), $availableDays)) {
+            $dates[] = $date->format('Y-m-d');
+        }
+        $date->addDay();
+    }
+
+    return $dates;
+}
+
+
 
 }
