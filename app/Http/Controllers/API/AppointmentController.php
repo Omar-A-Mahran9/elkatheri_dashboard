@@ -80,12 +80,23 @@ class AppointmentController extends Controller
                 }),
             ];
         });
+    $unavailableDays = Schedule::whereIsAvailable(false)->pluck('day_of_week')->toArray(); // e.g. ['Sunday', 'Wednesday']
+
+    $startDate = now();
+    $endDate = now()->addMonths(2);
+            $unavailableDates = [];
+    for ($date = $startDate->copy(); $date->lte($endDate); $date->addDay()) {
+        if (in_array($date->format('l'), $unavailableDays)) {
+            $unavailableDates[] = $date->format('Y-m-d');
+        }
+    }
 
         return response()->json([
             "days_of" => Schedule::whereIsAvailable(false)->get()->pluck('day_of_week')->toArray(),
+            "unavailable_dates" => $unavailableDates,
+
             "start_date" => now()->format('Y-m-d'),
             "end_date" => now()->addMonths(2)->format('Y-m-d'),
-            
             "brands" => $brandsWithModels,
             "cities" => $citiesWithBranches,
         ]);
