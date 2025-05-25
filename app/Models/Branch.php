@@ -51,7 +51,7 @@ public function unavailableDatesBetween($startDate, $endDate)
         ->where('is_available', true)
         ->pluck('day_of_week')
         ->map(function ($day) {
-            return ucfirst(strtolower($day)); // Ensure consistent casing like "Thursday"
+            return ucfirst(strtolower($day)); // "Thursday" مثلاً
         })
         ->toArray();
 
@@ -60,7 +60,8 @@ public function unavailableDatesBetween($startDate, $endDate)
     $end = Carbon::parse($endDate);
 
     while ($date->lte($end)) {
-        if (in_array($date->format('l'), $availableDays)) {
+        // إذا اليوم ليس من الأيام المتاحة، نضيفه للقائمة كغير متاح
+        if (!in_array($date->format('l'), $availableDays)) {
             $dates[] = $date->format('Y-m-d');
         }
         $date->addDay();
@@ -68,6 +69,7 @@ public function unavailableDatesBetween($startDate, $endDate)
 
     return $dates;
 }
+
 
 
 }
