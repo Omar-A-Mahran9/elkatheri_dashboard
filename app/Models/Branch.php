@@ -44,7 +44,6 @@ class Branch extends Model
         return $this->hasMany(Schedule::class,'branch_id');
     }
 
-use Carbon\Carbon;
 
 public function availableDatesBetween($startDate, $endDate)
 {
