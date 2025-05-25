@@ -13,6 +13,7 @@ use App\Http\Controllers\Controller;
 use App\Services\AppointmentService;
 use App\Http\Requests\StoreAppointmentRequest;
 use App\Http\Resources\AppointmentResource;
+use App\Models\Branch;
 use App\Models\Campaign;
 use App\Models\Order;
 use App\Models\OrderTracking;
@@ -80,25 +81,31 @@ class AppointmentController extends Controller
                 }),
             ];
         });
-    $unavailableDays = Schedule::whereIsAvailable(true)->pluck('day_of_week')->toArray(); // e.g. ['Sunday', 'Wednesday']
+        $startDate = now()->format('Y-m-d');
+        $endDate = now()->addMonths(2)->format('Y-m-d');
 
-    $startDate = now();
-    $endDate = now()->addMonths(2);
-            $unavailableDates = [];
-    for ($date = $startDate->copy(); $date->lte($endDate); $date->addDay()) {
-        if (in_array($date->format('l'), $unavailableDays)) {
-            $unavailableDates[] = $date->format('Y-m-d');
+        $allBranches = Branch::whereIn('type', ['maintenance_center', '3s_center'])
+            ->whereHas('schedule', fn($q) => $q->where('is_available', true))
+            ->get();
+
+        $unavailableDates = [];
+
+        foreach ($allBranches as $branch) {
+            $unavailableDates = array_merge($unavailableDates, $branch->unavailableDatesBetween($startDate, $endDate));
         }
-    }
+
+        $unavailableDates = array_values(array_unique($unavailableDates)); // remove duplicates
+        sort($unavailableDates); // optional: sort chronologically
+
 
         return response()->json([
             "days_of" => Schedule::whereIsAvailable(false)->get()->pluck('day_of_week')->toArray(),
-            "unavailable_dates" => $unavailableDates,
-
             "start_date" => now()->format('Y-m-d'),
             "end_date" => now()->addMonths(2)->format('Y-m-d'),
             "brands" => $brandsWithModels,
             "cities" => $citiesWithBranches,
+            "unavailable_dates" => $unavailableDates,
+
         ]);
     }
     public function store(StoreAppointmentRequest $request)

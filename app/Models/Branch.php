@@ -42,4 +42,33 @@ class Branch extends Model
     {
         return $this->hasMany(Schedule::class,'branch_id');
     }
+
+    public function isDayAvailable($dayOfWeek)
+{
+    return $this->schedule()
+        ->where('day_of_week', $dayOfWeek)
+        ->where('is_available', true)
+        ->exists();
+}
+
+public function unavailableDatesBetween($startDate, $endDate)
+{
+    $availableDates = $this->availableDatesBetween($startDate, $endDate);
+
+    $dates = [];
+    $date = \Carbon\Carbon::parse($startDate);
+    $end = \Carbon\Carbon::parse($endDate);
+
+    while ($date->lte($end)) {
+        $current = $date->format('Y-m-d');
+        if (!in_array($current, $availableDates)) {
+            $dates[] = $current;
+        }
+        $date->addDay();
+    }
+
+    return $dates;
+}
+
+
 }
