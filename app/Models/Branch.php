@@ -50,7 +50,7 @@ class Branch extends Model
         ->where('is_available', true)
         ->pluck('day_of_week')
         ->toArray(); // e.g. ['Monday', 'Tuesday']
-
+    dd($availableDays);
     $dates = [];
     $date = Carbon::parse($startDate);
     $end = Carbon::parse($endDate);

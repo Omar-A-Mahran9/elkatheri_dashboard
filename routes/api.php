@@ -49,7 +49,7 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
     Route::get('cars-filter-data', 'OrderController@filterData');
     Route::get('time-slots', 'ScheduleController@timeSlots');
     Route::get('make-appointment-form-data', 'AppointmentController@formData');
-        Route::get('unavailable-dates', 'AppointmentController@unavailableDates');
+    Route::get('unavailable-dates', 'AppointmentController@unavailableDates');
 
     Route::post('make-appointment', 'AppointmentController@store');
     Route::get('banks', 'BankController');
