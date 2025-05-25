@@ -80,7 +80,7 @@ class AppointmentController extends Controller
                 }),
             ];
         });
-    $unavailableDays = Schedule::whereIsAvailable(false)->pluck('day_of_week')->toArray(); // e.g. ['Sunday', 'Wednesday']
+    $unavailableDays = Schedule::whereIsAvailable(true)->pluck('day_of_week')->toArray(); // e.g. ['Sunday', 'Wednesday']
 
     $startDate = now();
     $endDate = now()->addMonths(2);
