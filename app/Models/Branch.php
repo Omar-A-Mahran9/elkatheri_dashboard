@@ -44,19 +44,24 @@ class Branch extends Model
         return $this->hasMany(Schedule::class,'branch_id');
     }
 
-    public function unavailableDatesBetween($startDate, $endDate)
+use Carbon\Carbon;
+
+public function availableDatesBetween($startDate, $endDate)
 {
     $availableDays = $this->schedule()
         ->where('is_available', true)
         ->pluck('day_of_week')
-        ->toArray(); // e.g. ['Monday', 'Tuesday']
-    dd($availableDays);
+        ->map(function ($day) {
+            return ucfirst(strtolower($day)); // Ensure consistent casing like "Thursday"
+        })
+        ->toArray();
+
     $dates = [];
     $date = Carbon::parse($startDate);
     $end = Carbon::parse($endDate);
 
     while ($date->lte($end)) {
-        if (!in_array($date->format('l'), $availableDays)) {
+        if (in_array($date->format('l'), $availableDays)) {
             $dates[] = $date->format('Y-m-d');
         }
         $date->addDay();
@@ -64,5 +69,6 @@ class Branch extends Model
 
     return $dates;
 }
+
 
 }
