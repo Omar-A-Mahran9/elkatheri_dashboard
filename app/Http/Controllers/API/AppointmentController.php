@@ -81,22 +81,6 @@ class AppointmentController extends Controller
                 }),
             ];
         });
-        $startDate = now()->format('Y-m-d');
-        $endDate = now()->addMonths(2)->format('Y-m-d');
-
-        $allBranches = Branch::whereIn('type', ['maintenance_center', '3s_center'])
-            ->whereHas('schedule', fn($q) => $q->where('is_available', true))
-            ->get();
-
-        $unavailableDates = [];
-
-        foreach ($allBranches as $branch) {
-            $unavailableDates = array_merge($unavailableDates, $branch->unavailableDatesBetween($startDate, $endDate));
-        }
-
-        $unavailableDates = array_values(array_unique($unavailableDates)); // remove duplicates
-        sort($unavailableDates); // optional: sort chronologically
-
 
         return response()->json([
             "days_of" => Schedule::whereIsAvailable(false)->get()->pluck('day_of_week')->toArray(),
@@ -104,10 +88,29 @@ class AppointmentController extends Controller
             "end_date" => now()->addMonths(2)->format('Y-m-d'),
             "brands" => $brandsWithModels,
             "cities" => $citiesWithBranches,
-            "unavailable_dates" => $unavailableDates,
-
         ]);
     }
+
+    public function unavailableDates(Request $request)
+{
+    $request->validate([
+        'branch_id' => 'required|exists:branches,id',
+    ]);
+
+    $branch = Branch::with('schedule')->findOrFail($request->branch_id);
+
+    $startDate = now()->format('Y-m-d');
+    $endDate = now()->addMonths(2)->format('Y-m-d');
+
+    $unavailableDates = $branch->unavailableDatesBetween($startDate, $endDate);
+
+    return response()->json([
+        'unavailable_dates' => $unavailableDates,
+        'start_date' => $startDate,
+        'end_date' => $endDate,
+    ]);
+}
+
     public function store(StoreAppointmentRequest $request)
     {
          $appointment = $this->appointmentService->store($request);

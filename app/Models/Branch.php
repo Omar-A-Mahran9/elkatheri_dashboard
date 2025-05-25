@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -43,43 +44,19 @@ class Branch extends Model
         return $this->hasMany(Schedule::class,'branch_id');
     }
 
-    public function isDayAvailable($dayOfWeek)
+    public function unavailableDatesBetween($startDate, $endDate)
 {
-    return $this->schedule()
-        ->where('day_of_week', $dayOfWeek)
+    $availableDays = $this->schedule()
         ->where('is_available', true)
-        ->exists();
-}
-
-public function unavailableDatesBetween($startDate, $endDate)
-{
-    $availableDates = $this->availableDatesBetween($startDate, $endDate);
+        ->pluck('day_of_week')
+        ->toArray(); // e.g. ['Monday', 'Tuesday']
 
     $dates = [];
-    $date = \Carbon\Carbon::parse($startDate);
-    $end = \Carbon\Carbon::parse($endDate);
+    $date = Carbon::parse($startDate);
+    $end = Carbon::parse($endDate);
 
     while ($date->lte($end)) {
-        $current = $date->format('Y-m-d');
-        if (!in_array($current, $availableDates)) {
-            $dates[] = $current;
-        }
-        $date->addDay();
-    }
-
-    return $dates;
-}
-
-public function availableDatesBetween($startDate, $endDate)
-{
-    $availableDays = $this->schedule()->where('is_available', true)->pluck('day_of_week')->toArray();
-
-    $dates = [];
-    $date = \Carbon\Carbon::parse($startDate);
-    $end = \Carbon\Carbon::parse($endDate);
-
-    while ($date->lte($end)) {
-        if (in_array($date->format('l'), $availableDays)) {
+        if (!in_array($date->format('l'), $availableDays)) {
             $dates[] = $date->format('Y-m-d');
         }
         $date->addDay();
@@ -87,7 +64,5 @@ public function availableDatesBetween($startDate, $endDate)
 
     return $dates;
 }
-
-
 
 }
