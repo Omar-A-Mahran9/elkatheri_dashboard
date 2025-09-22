@@ -47,12 +47,12 @@
             <select class="form-select form-select-solid" data-control="select2" data-placeholder="{{ __('Choose the branch') }}" name="branch_id">
                 <option value="" selected></option>
                 @foreach ($branches as $branch)
-                    <option 
+                    <option
                     data-start-rest="{{$branch->start_rest}}"
                     data-end-rest="{{$branch->end_rest}}"
-                    data-maintenance-time="{{$branch->maintenance_time}}" 
+                    data-maintenance-time="{{$branch->maintenance_time}}"
                     data-capacity-of-cars-per-time="{{$branch->capacity_of_cars_per_time}}"
-                    @if(request()->branch_id == $branch->id) selected  @endif 
+                    @if(request()->branch_id == $branch->id) selected  @endif
                     value="{{$branch->id}}">{{$branch->name}}</option>
                 @endforeach
             </select>

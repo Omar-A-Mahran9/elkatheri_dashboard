@@ -74,7 +74,7 @@ public function refreshZohoAccessToken()
 
 
     $data = $response->json();
-
+ 
     // تحديث التوكن في قاعدة البيانات
     ZohoToken::updateOrCreate(
         ['id' => 1],  // أو استخدم أي معرّف ترغب به
